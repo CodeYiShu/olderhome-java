@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codeshu.mapper.GuarderMapper">
+    <select id="findByName" parameterType="string" resultType="com.codeshu.entity.Guarder">
+        select * from guarder where username=#{username}
+    </select>
+    <insert id="saveGuarder" parameterType="com.codeshu.entity.Guarder" useGeneratedKeys="true" keyProperty="id">
+        insert into guarder(username,password,salt,roleId) values(#{username},#{password},#{salt},2)
+    </insert>
+</mapper>

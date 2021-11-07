@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap">
     <el-form label-position="left" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm login-container">
-      <h3 class="title">用户登录</h3>
+      <h3 class="title">用户注册</h3>
       <el-form-item prop="username">
         <el-input type="text" v-model="ruleForm.username" auto-complete="off" placeholder="账号"></el-input>
       </el-form-item>
@@ -19,89 +19,70 @@
         </el-select>
       </el-form-item>
       <el-form-item style="width:100%;">
-        <el-button type="primary" style="width:100%;" @click="submitForm('ruleForm')">登录</el-button><br/>
+        <el-button type="primary" style="width:100%;" @click="submitForm('ruleForm')">注册</el-button><br/>
       </el-form-item>
       <el-form-item style="width:100%;">
-        <el-button type="primary" style="width:100%;" @click="register">注册</el-button>
+        <el-button type="primary" style="width:100%;" @click="toLogin">已有账号，去登录</el-button><br/>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "Login",
-    data() {
-      return {
-        ruleForm: {
-          username: "test",
-          password:"123"
-        },
-        rules: {
-          username: [
-            { required: true, message: "请输入用户名", trigger: "blur" },
-            { min: 3, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" },
-          ],
-          password: [
-            { required: true, message: "请输入密码", trigger: "blur" },
-            { min: 3, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" },
-          ]
-        },
-        options: [{
-          value: '1',
-          label: '管理员'
-        }, {
-          value: '2',
-          label: '监护人'
-        }, {
-          value: '3',
-          label: '医护人员'
-        }],
-        role: '1'  //选项第几个
-      };
-    },
-    methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-           if (valid) {
-                alert("submit!");
-                //將角色携帶过去后台
-                this.ruleForm.role = this.role;
-                const _this = this;
-                //发送登录请求，携带表单数据到请求体
-                this.$axios.post("http://localhost:8081/login",this.ruleForm)
-                .then(response =>{
-                    //从响应头中获取jwt
-                    const jwt = response.headers['authorization'];
-                    //获取用户信息
-                    const userInfo = JSON.stringify(response.data.data);
-                    if(_this.role === '1'){
-                      localStorage.setItem("jwt",jwt);
-                      sessionStorage.setItem("userInfo",userInfo);
-                      _this.$router.push("/admin/home");
-                    }
-                    if(_this.role === '2'){
-                      localStorage.setItem("jwt",jwt);
-                      sessionStorage.setItem("userInfo",userInfo);
-                      _this.$router.push("/guarder/home");
-                    }
-                    if(_this.role === '3'){
-                      localStorage.setItem("jwt",jwt);
-                      sessionStorage.setItem("userInfo",userInfo);
-                      _this.$router.push("/staff/home");
-                    }   
-                })             
-            } else {
-                console.log("error submit!!");
-                return false;
-            }
-        })
+export default {
+  name: "Register.vue",
+  data() {
+    return {
+      ruleForm: {
+        username: "",
+        password:""
       },
-      register(){
-        this.$router.push("/register")
-      }
+      rules: {
+        username: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          { min: 3, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" },
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 3, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" },
+        ]
+      },
+      options: [
+      {
+        value: '2',
+        label: '监护人'
+      }, {
+        value: '3',
+        label: '医护人员'
+      }],
+      role: '2'  //选项第几个
+    };
+  },
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert("submit!");
+          //將角色携帶过去后台
+          this.ruleForm.role = this.role;
+          const _this = this;
+          //发送登录请求，携带表单数据到请求体
+          this.$axios.post("http://localhost:8081/register", this.ruleForm)
+              .then(response => {
+                alert(response.data.data)
+                this.$router.push("/login")
+              })
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      })
     },
-  };
+    toLogin(){
+      this.$router.push("/login")
+    }
+  }
+}
 </script>
 
 <style scoped>

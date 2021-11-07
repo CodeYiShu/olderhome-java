@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "LookOrder"
+  name: "LookOlder"
 }
 </script>
 

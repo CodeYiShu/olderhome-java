@@ -1,12 +1,12 @@
 <template>
   <div>
-    医护人员的老人管理
+    缴费
   </div>
 </template>
 
 <script>
 export default {
-  name: "OrderManager"
+  name: "Pay"
 }
 </script>
 

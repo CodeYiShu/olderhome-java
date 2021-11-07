@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "OrderManager"
+  name: "OlderManager"
 }
 </script>
 

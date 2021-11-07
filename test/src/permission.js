@@ -3,8 +3,8 @@ import el from "element-ui/src/locale/lang/el";
 
 // 每次路由都会经过此函数，路由判断登录 根据路由配置文件的参数
 router.beforeEach((to, from, next) => {
-    //如果是登录，则放行
-    if(to.path=="/login"){
+    //如果是登录和注册，则放行
+    if(to.path=="/login" || to.path=="/register"){
         next(); 
     }else if(localStorage.getItem("jwt")){  //如果已经登录的则判断角色
         //从sessionStorage中获取角色

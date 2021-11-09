@@ -29,13 +29,13 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 	public int insert(Admin admin) {
 		//1、生成随机盐
 		String salt = SaltUtils.getSalt(8);
-		//2、将随机盐保存到User中
+		//2、将随机盐保存到Admin中
 		admin.setSalt(salt);
 		//3、将明文密码进行md5+salt+散列进行加密
 		Md5Hash md5Hash = new Md5Hash(admin.getPassword(),salt,1024);
-		//4、将加密后的密码保存到user中
+		//4、将加密后的密码保存到Admin中
 		admin.setPassword(md5Hash.toHex());
-		///5、调用Dao层的saveUser()将user保存到数据库中
+		///5、调用Dao层的saveAdmin()将user保存到数据库中
 		int count = mapper.saveAdmin(admin);
 		return count;
 	}

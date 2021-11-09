@@ -1,22 +1,16 @@
 package com.codeshu.shiro;
 
-import cn.hutool.json.JSONUtil;
-import com.codeshu.common.Result;
 import com.codeshu.shiro.token.JwtToken;
 import com.codeshu.shiro.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
@@ -42,7 +36,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 	 */
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
-		//判断请求的请求头是否带上 "Token"
+		//判断请求的请求头是否带上 "Authorization"
 		if (isLoginAttempt(request, response)) {
 			//如果存在，则进入 executeLogin 方法执行登入，检查 token 是否正确
 			try {

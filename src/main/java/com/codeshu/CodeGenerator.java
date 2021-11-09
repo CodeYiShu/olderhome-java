@@ -5,7 +5,7 @@ package com.codeshu;
  * @date 2021/11/4 22:46
  * @Email 13828965090@163.com
  */
-
+//代码生成器
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+//代码生成器
 // 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中
 public class CodeGenerator {
 

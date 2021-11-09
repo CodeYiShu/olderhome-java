@@ -25,7 +25,6 @@ public class JwtUtils {
 	//以下三个属性与配置文件绑定
 	private String secret;  //密钥
 	private long expire;    //过期时间
-	private String header;  //携带令牌的请求头
 
 	/**
 	 * 生成jwt令牌
@@ -57,9 +56,9 @@ public class JwtUtils {
 			return Jwts.parser()
 					.setSigningKey(secret)  //使用同样的算法和密钥，进行检验jwt是否合法
 					.parseClaimsJws(token)
-					.getBody();  //校验成功则返回保存的username
+					.getBody();  //校验成功则返回保存在payload中的用户名和角色
 		}catch (Exception e){
-			log.debug("validate is token error ", e);
+			log.debug("令牌认证失败", e);
 			return null;
 		}
 	}

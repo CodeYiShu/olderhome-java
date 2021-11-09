@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2021/11/5 13:12
  * @Email 13828965090@163.com
  */
+//跨域处理
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 	@Override

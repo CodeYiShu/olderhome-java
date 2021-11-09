@@ -24,27 +24,26 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-	@ResponseStatus(HttpStatus.UNAUTHORIZED) //因为前后端分离 返回一个状态 一般是401 没有权限
-	@ExceptionHandler(value =  ShiroException.class)//捕获运行时异常ShiroException是大部分异常的父类
+	@ResponseStatus(HttpStatus.UNAUTHORIZED) //返回一个状态码,一般是401,表示没有权限
+	@ExceptionHandler(value =  ShiroException.class)//捕获运行时异常ShiroException,他是大部分异常的父类
 	public Result handler(ShiroException e){
-		log.error("运行时异常：-----------------{}",e);
-		return Result.fail(401,e.getMessage(),null);
+		log.error("Shiro运行时异常：-----------------{}",e);
+		return Result.fail(401,e.getMessage(),null); //用统一结果封装返回
 	}
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST) //因为前后端分离 返回一个状态
+	@ResponseStatus(HttpStatus.BAD_REQUEST) //返回一个状态400
 	@ExceptionHandler(value =  RuntimeException.class)//捕获运行时异常
 	public Result handler(RuntimeException e){
 		log.error("运行时异常：-----------------{}",e);
 		return Result.fail(e.getMessage());
 	}
 
-
 	/**
 	 * 实体校验异常
 	 * MethodArgumentNotValidException捕获实体校验异常
 	 */
-	@ResponseStatus(HttpStatus.BAD_REQUEST) //因为前后端分离 返回一个状态
-	@ExceptionHandler(value =  MethodArgumentNotValidException.class)//捕获运行时异常
+	@ResponseStatus(HttpStatus.BAD_REQUEST) //返回一个状态400
+	@ExceptionHandler(value =  MethodArgumentNotValidException.class)//捕获校验异常
 	public Result handler(MethodArgumentNotValidException e){
 		log.error("实体捕获异常  ：-----------------{}",e);
 		BindingResult bindingException = e.getBindingResult();
@@ -58,18 +57,17 @@ public class GlobalExceptionHandler {
 	 * @param e
 	 * @return
 	 */
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)  //400
 	@ExceptionHandler(value = IllegalArgumentException.class)
 	public Result handler(IllegalArgumentException e){
 		log.error("Assert异常:------------------>{}",e);
 		return Result.fail(e.getMessage());
 	}
 
-	@ResponseStatus(HttpStatus.UNAUTHORIZED) //因为前后端分离 返回一个状态 一般是401 密码错误
+	@ResponseStatus(HttpStatus.UNAUTHORIZED) //401,密码错误
 	@ExceptionHandler(value =  IncorrectCredentialsException.class)//捕获IncorrectCredentialsException异常
 	public Result handle(IncorrectCredentialsException e){
 		log.error("运行时异常：-----------------{}",e);
 		return Result.fail(401,"密码错误",null);
 	}
-	
 }

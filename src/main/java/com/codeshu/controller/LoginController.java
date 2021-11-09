@@ -13,6 +13,7 @@ import com.codeshu.shiro.utils.JwtUtils;
 import com.codeshu.shiro.token.UserToken;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -84,6 +85,15 @@ public class LoginController {
 		map.put("role",role);
 		map.put("username",username);
 		return Result.success(map);
+	}
+
+	//需要认证权限才能退出登录
+	@RequiresAuthentication
+	@RequestMapping("/logout")
+	public Result logout() {
+		//调用主体对象的logout退出登录
+		SecurityUtils.getSubject().logout();
+		return null;
 	}
 
 }

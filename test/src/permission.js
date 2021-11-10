@@ -48,6 +48,4 @@ router.beforeEach((to, from, next) => {
     }else{ //没有登录的进入登录页面
         next("/login");
     }
-
-
 })

@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
  * @date 2021/11/5 14:32
  * @Email 13828965090@163.com
  */
-@Component
+
 public class AccountRealm extends AuthorizingRealm {
 	@Autowired
 	JwtUtils jwtUtils;
@@ -55,15 +55,19 @@ public class AccountRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 		System.out.println("我来验证token咯");
 		/*如果不是UsernameAndPasswordToken，表示验证JWT*/
-		//此时需要给Realm设置一个SimpleCredentialsMatcher密码匹配器而不是上面那个
-		this.setCredentialsMatcher(new SimpleCredentialsMatcher());
+
 		//将令牌转为jwtToken类型
 		JwtToken jwtToken = (JwtToken) authenticationToken;
 		//获取JwtToken中的属性token（本质上是来自于请求头的令牌）
 		String token = (String) jwtToken.getPrincipal();
 
-		//传入token，调用工具类进行校验token
+		//校验jwt，返回创建jwt时保存到payload中的数据
 		Claims claims = jwtUtils.getClaimByToken(token);
+		//校验是否为空和时间是否过期
+		if(claims == null || jwtUtils.isTokenExpired(claims.getExpiration())){
+			throw new ExpiredCredentialsException("token已失效,请重新登录");
+		}
+
 		//从令牌的payload部分获取用户名和角色
 		String username = (String) claims.get("username");
 		String role = (String) claims.get("role");
@@ -81,16 +85,11 @@ public class AccountRealm extends AuthorizingRealm {
 			Staff staff = staffService.findByName(username);
 			return new SimpleAuthenticationInfo(staff,jwtToken.getCredentials(),getName());
 		}
-//		//如果用户为空，则表示用户不存在
-//		if(user == null){
-//			throw new UnknownAccountException("账户不存在");
 	}
 
 	//权限校验
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		info.addRole("Admin");
-		return info;
+		return null;
 	}
 }

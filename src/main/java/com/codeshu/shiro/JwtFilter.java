@@ -70,12 +70,6 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		//从请求头中获取出Token
 		String token = httpServletRequest.getHeader("Authorization");
-		//校验jwt，返回创建jwt时保存到payload中的数据
-		Claims claims = jwtUtils.getClaimByToken(token);
-		//校验是否为空和时间是否过期
-		if(claims == null || jwtUtils.isTokenExpired(claims.getExpiration())){
-			throw new ExpiredCredentialsException("token已失效,请重新登录");
-		}
 		//将字符串形式的Token转为JwtToken类型的令牌
 		JwtToken jwtToken = new JwtToken(token);
 		//调用主体对象的login()，传入Token提交给realm进行登入，如果错误他会抛出异常并被捕获

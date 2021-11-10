@@ -27,11 +27,10 @@ public class AdminController {
 
 	@RequiresAuthentication
 	@RequestMapping("/index")
-	@RequiresRoles("Admin")
 	public Admin index(){
 		//获取在AccountRealm中保存到主体对象的Principal
 		Admin admin = (Admin)SecurityUtils.getSubject().getPrincipal();
 		System.out.println(admin);
-		return adminService.getById(1L);
+		return admin;
 	}
 }

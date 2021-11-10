@@ -32,7 +32,7 @@ public class UserModularRealmAuthenticator extends ModularRealmAuthenticator {
 		assertRealmsConfigured();
 		//如果token类型是UserToken的，则表示是登录的token
 		if(authenticationToken instanceof UserToken){
-			// 强制转换回自定义的CustomizedToken
+			// 强制转换回自定义的UserToken
 			UserToken token = (UserToken) authenticationToken;
 			// 登录类型
 			loginType = token.getLoginType();

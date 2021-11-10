@@ -23,28 +23,18 @@ public class GuarderRealm extends AuthorizingRealm {
 	@Autowired
 	GuarderService guarderService;
 
-	//为了让realm支持JwtToken类型的令牌校验
-	@Override
-	public boolean supports(AuthenticationToken token) {
-		return token instanceof JwtToken || token instanceof UsernamePasswordToken;
-	}
-
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 		System.out.println("监护人员认证");
 		//获取用户名
 		String username = (String)authenticationToken.getPrincipal();
 		Guarder guarder = guarderService.findByName(username);
-		if(guarder != null){
-			//将数据库查询出的用户名、密码和随机盐保存到AuthenticationInfo中
-			AuthenticationInfo info = new SimpleAuthenticationInfo(guarder.getUsername(),guarder.getPassword(),
-					ByteSource.Util.bytes(guarder.getSalt()),
-					this.getName());
-			//返回进行密码认证
-			return info;
-		}else {
-			throw new AuthenticationException("该用户不存在！");
-		}
+		//将数据库查询出的用户名、密码和随机盐保存到AuthenticationInfo中
+		AuthenticationInfo info = new SimpleAuthenticationInfo(guarder.getUsername(),guarder.getPassword(),
+				ByteSource.Util.bytes(guarder.getSalt()),
+				this.getName());
+		//返回进行密码认证
+		return info;
 	}
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {

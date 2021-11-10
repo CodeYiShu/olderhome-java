@@ -16,6 +16,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class AccountRealm extends AuthorizingRealm {
 
 	/**
 	 * 登录认证校验
-	 * @param authenticationToken ：调用主体对象login()时传递来的令牌，是JwtToken类型的
+	 * @param authenticationToken ：JwtFilter调用主体对象login()时传递来的令牌，是JwtToken类型的
 	 * @return
 	 * @throws AuthenticationException
 	 */
@@ -69,7 +70,7 @@ public class AccountRealm extends AuthorizingRealm {
 		//调用Service，根据用户名获取到用户
  		if("Admin".equals(role)){ //管理员
 			Admin admin = adminService.findByName(username);
-			// 用户信息  密钥token 当前Realm的名字
+			// 用户信息  token 当前Realm的名字
 			// 第一个参数会存入当前主体对象的Principal，我们可以在任何位置调用主体对象的getPrincipal()获取，具体看整合笔记的博客接口的开发
 			// 第二个参数是token，他会在密码匹配器中去和JwtToken中的属性token对比，二者必定相等
 			return new SimpleAuthenticationInfo(admin,jwtToken.getCredentials(),getName());
@@ -88,6 +89,8 @@ public class AccountRealm extends AuthorizingRealm {
 	//权限校验
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-		return null;
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		info.addRole("Admin");
+		return info;
 	}
 }

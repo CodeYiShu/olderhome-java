@@ -23,28 +23,18 @@ public class StaffRealm extends AuthorizingRealm {
 	@Autowired
 	StaffService staffService;
 
-	//为了让realm支持JwtToken类型的令牌校验
-	@Override
-	public boolean supports(AuthenticationToken token) {
-		return token instanceof JwtToken || token instanceof UsernamePasswordToken;
-	}
-
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 		System.out.println("医护人员认证");
 		//获取用户名
 		String username = (String)authenticationToken.getPrincipal();
 		Staff staff = staffService.findByName(username);
-		if(staff != null){
-			//将数据库查询出的用户名、密码和随机盐保存到AuthenticationInfo中
-			AuthenticationInfo info = new SimpleAuthenticationInfo(staff.getUsername(),staff.getPassword(),
-					ByteSource.Util.bytes(staff.getSalt()),
-					this.getName());
-			//返回进行密码认证
-			return info;
-		}else {
-			throw new AuthenticationException("该用户不存在！");
-		}
+		//将数据库查询出的用户名、密码和随机盐保存到AuthenticationInfo中
+		AuthenticationInfo info = new SimpleAuthenticationInfo(staff.getUsername(),staff.getPassword(),
+				ByteSource.Util.bytes(staff.getSalt()),
+				this.getName());
+		//返回进行密码认证
+		return info;
 	}
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {

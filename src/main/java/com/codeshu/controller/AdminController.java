@@ -5,6 +5,7 @@ import com.codeshu.entity.Admin;
 import com.codeshu.service.AdminService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,6 +27,7 @@ public class AdminController {
 
 	@RequiresAuthentication
 	@RequestMapping("/index")
+	@RequiresRoles("Admin")
 	public Admin index(){
 		//获取在AccountRealm中保存到主体对象的Principal
 		Admin admin = (Admin)SecurityUtils.getSubject().getPrincipal();

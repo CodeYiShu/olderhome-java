@@ -1,6 +1,5 @@
 package com.codeshu.shiro.realm;
 
-import cn.hutool.core.lang.Assert;
 import com.codeshu.entity.Admin;
 import com.codeshu.entity.Guarder;
 import com.codeshu.entity.Staff;
@@ -8,19 +7,13 @@ import com.codeshu.service.AdminService;
 import com.codeshu.service.GuarderService;
 import com.codeshu.service.StaffService;
 import com.codeshu.shiro.token.JwtToken;
-import com.codeshu.shiro.token.UserToken;
 import com.codeshu.shiro.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
-import lombok.SneakyThrows;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * @author ShuCode
@@ -50,7 +43,6 @@ public class AccountRealm extends AuthorizingRealm {
 	 * @return
 	 * @throws AuthenticationException
 	 */
-	@SneakyThrows
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 		System.out.println("我来验证token咯");
@@ -65,7 +57,7 @@ public class AccountRealm extends AuthorizingRealm {
 		Claims claims = jwtUtils.getClaimByToken(token);
 		//校验是否为空和时间是否过期
 		if(claims == null || jwtUtils.isTokenExpired(claims.getExpiration())){
-			throw new ExpiredCredentialsException("token已失效,请重新登录");
+			throw new ExpiredCredentialsException("token错误或过期,请重新登录"); //会被全局异常处理的ShiroException捕获
 		}
 
 		//从令牌的payload部分获取用户名和角色

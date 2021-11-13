@@ -22,11 +22,26 @@ import LookOlder from "../view/guarder/LookOlder"
 import GuarderPrivate from "../view/guarder/Private";
 import Pay from "../view/guarder/Pay";
 
+import Form from "../view/form/index"
+import Table from "../view/form/Table"
+
 Vue.use(Router)
 
 export default new Router({
   mode:'history', //指定为history模式
   routes: [
+
+    {
+      path:"/form",
+      name:"Form",
+      component:Form
+    },
+    {
+      path:"/table",
+      name:"Table",
+      component:Table
+    },
+
     // 登录
     {
       path:"/login",

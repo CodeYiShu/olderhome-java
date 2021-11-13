@@ -1,4 +1,4 @@
-package com.codeshu.controller;
+package com.codeshu.controller.common;
 
 import cn.hutool.core.lang.Assert;
 import com.codeshu.common.LoginAndRegisterDto;
@@ -30,7 +30,7 @@ import java.util.Map;
  * @Email 13828965090@163.com
  */
 @RestController
-public class LoginController {
+public class LoginController1 {
 	@Autowired
 	AdminService adminService;
 	@Autowired
@@ -40,7 +40,7 @@ public class LoginController {
 	@Autowired
 	JwtUtils jwtUtils;
 
-	@RequestMapping("/login")
+	@RequestMapping("/login1")
 	public Result login(@Validated @RequestBody LoginAndRegisterDto loginDto, HttpServletResponse response) throws JsonProcessingException {
 		UserToken userToken = null;
 		String username = null;
@@ -79,6 +79,9 @@ public class LoginController {
 		//将token 放在我们的header里面
 		response.setHeader("Authorization",jwt);
 		response.setHeader("Access-control-Expose-Headers","Authorization");
+		/*可以让AdminRealm中返回的第一个参数是Admin（让密码、随机盐为空），然后在这里直接从调用
+		* 主体对象的getPrinal()去获取他存入的Admin，去返回给前台
+		* */
 		Map<String,Object> map = new HashMap();
 		//将用户id、角色和用户名返回
 		map.put("id",id);
@@ -89,7 +92,7 @@ public class LoginController {
 
 	//需要认证权限才能退出登录
 	@RequiresAuthentication
-	@RequestMapping("/logout")
+	@RequestMapping("/logout1")
 	public Result logout() {
 		//调用主体对象的logout退出登录
 		SecurityUtils.getSubject().logout();

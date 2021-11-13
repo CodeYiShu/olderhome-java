@@ -8,6 +8,8 @@ package com.codeshu.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.ShiroException;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -24,7 +26,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-	@ResponseStatus(HttpStatus.UNAUTHORIZED) //返回一个状态码,一般是401,表示没有权限
+
+	@ResponseStatus(HttpStatus.UNAUTHORIZED) //返回一个状态码,一般是401,表示没有权限、token错误等
 	@ExceptionHandler(value =  ShiroException.class)//捕获运行时异常ShiroException,他是大部分异常的父类
 	public Result handler(ShiroException e){
 		log.error("Shiro运行时异常：-----------------{}",e);
@@ -64,10 +67,15 @@ public class GlobalExceptionHandler {
 		return Result.fail(e.getMessage());
 	}
 
-	@ResponseStatus(HttpStatus.UNAUTHORIZED) //401,密码错误
-	@ExceptionHandler(value =  IncorrectCredentialsException.class)//捕获IncorrectCredentialsException异常
-	public Result handle(IncorrectCredentialsException e){
-		log.error("运行时异常：-----------------{}",e);
-		return Result.fail(401,"密码错误",null);
+	@ResponseStatus(HttpStatus.UNAUTHORIZED) //返回一个状态码,一般是401,表示没有权限、token错误、密码错误、用户名不存在等
+	@ExceptionHandler(value =  AuthenticationException.class)//捕获运行时异常ShiroException,他是大部分异常的父类
+	public Result handler(AuthenticationException e){
+		if (e instanceof IncorrectCredentialsException){
+			log.error("AuthenticationException异常：-----------------{}","密码错误");
+			return Result.fail(401,"密码错误",null);
+		}
+		log.error("AuthenticationException异常：-----------------{}",e.getMessage());
+		return Result.fail(401,e.getMessage(),null); //用统一结果封装返回
 	}
+
 }

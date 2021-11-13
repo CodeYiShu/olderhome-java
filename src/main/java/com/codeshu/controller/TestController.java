@@ -1,19 +1,20 @@
 package com.codeshu.controller;
 
+import com.codeshu.common.Result;
 import com.codeshu.entity.Older;
 import com.codeshu.mapper.OlderMapper;
 import com.codeshu.service.OlderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ShuCode
@@ -60,4 +61,22 @@ public class TestController {
 	public void insert(@RequestBody Older older){
 		olderMapper.insert(older);
 	}
+
+	@PostMapping("/user/login")
+	public Result userLogin(@RequestBody ResultTest resultTest){
+		Map<String,String> map = new HashMap<>();
+		map.put("token","123");
+		return Result.success(map);
+	}
+	@RequestMapping("/user/info")
+	public Result userInfo(String token){
+		Map<String,String> map = new HashMap<>();
+		map.put("token","123");
+		return Result.success(map);
+	}
+}
+@Data
+class ResultTest{
+	private String username;
+	private String password;
 }

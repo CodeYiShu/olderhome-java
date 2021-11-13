@@ -1,4 +1,4 @@
-package com.codeshu.controller;
+package com.codeshu.controller.common;
 
 import com.codeshu.common.LoginAndRegisterDto;
 import com.codeshu.common.Result;

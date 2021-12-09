@@ -29,29 +29,29 @@ public class RegisterController {
 
 	@RequestMapping("/register")
 	public Result register(@RequestBody  LoginAndRegisterDto loginDto){
-		try{
-			if("1".equals(loginDto.getRole())){
-				Admin admin = new Admin();
-				admin.setUsername(loginDto.getUsername());
-				admin.setPassword(loginDto.getPassword());
-				adminService.insert(admin);
-			}else if("2".equals(loginDto.getRole())){
-				Guarder guarder = new Guarder();
-				guarder.setUsername(loginDto.getUsername());
-				guarder.setPassword(loginDto.getPassword());
-				guarderService.insert(guarder);
-			}else {
-				Staff staff = new Staff();
-				staff.setUsername(loginDto.getUsername());
-				staff.setPassword(loginDto.getPassword());
-				staffService.insert(staff);
-			}
-			//如果响应成功数据
+		int count = 0;
+		if("1".equals(loginDto.getRole())){
+			Admin admin = new Admin();
+			admin.setUsername(loginDto.getUsername());
+			admin.setPassword(loginDto.getPassword());
+			count = adminService.insert(admin);
+		}else if("2".equals(loginDto.getRole())){
+			Guarder guarder = new Guarder();
+			guarder.setUsername(loginDto.getUsername());
+			guarder.setPassword(loginDto.getPassword());
+			count = guarderService.save(guarder);
+		}else {
+			Staff staff = new Staff();
+			staff.setUsername(loginDto.getUsername());
+			staff.setPassword(loginDto.getPassword());
+			count = staffService.save(staff);
+		}
+		//如果响应成功数据
+		if(count != 0){
 			return Result.success("注册成功");
-		}catch (Exception e){
-			e.printStackTrace();
+		}else {
 			//有异常则响应异常数据
-			return Result.fail("注册失败");
+			return Result.fail("注册失败，用户名可能存在了");
 		}
 	}
 }

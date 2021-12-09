@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.codeshu.mapper.StaffMapper">
-    <select id="findByName" parameterType="string" resultType="com.codeshu.entity.Staff">
+    <!--根据名称查询-->
+    <select id="selectByName" parameterType="string" resultType="com.codeshu.entity.Staff">
         select * from staff where username=#{username}
     </select>
-    <insert id="saveStaff" parameterType="com.codeshu.entity.Staff" useGeneratedKeys="true" keyProperty="id">
-        insert into staff(username,password,salt,roleId) values(#{username},#{password},#{salt},3)
+    <!--查询所有-->
+    <select id="selectAll" resultType="com.codeshu.entity.Staff">
+        select * from staff
+    </select>
+    <!--模糊查询-->
+    <select id="selectByLikeName" parameterType="string" resultType="com.codeshu.entity.Staff">
+        select * from staff where username like concat('%',#{likeName},'%')
+    </select>
+    <!--保存-->
+    <insert id="insert" parameterType="com.codeshu.entity.Staff" useGeneratedKeys="true" keyProperty="id">
+        insert into staff(username,password,age,sex,phone,salt,roleId) values(#{username},#{password},#{age},#{sex},#{phone},#{salt},3)
     </insert>
+    <!--查询总数-->
+    <select id="total" resultType="int">
+        select count(*) from staff
+    </select>
+    <!--删除-->
+    <delete id="delete" parameterType="int">
+        delete from staff where id = #{id}
+    </delete>
+    <!--更新-->
+    <delete id="update" parameterType="com.codeshu.entity.Staff">
+        update staff set username=#{username},age=#{age},sex=#{sex},phone=#{phone} where id = #{id}
+    </delete>
 </mapper>

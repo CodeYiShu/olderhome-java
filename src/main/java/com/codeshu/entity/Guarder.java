@@ -4,13 +4,17 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author codeshu
@@ -25,11 +29,14 @@ public class Guarder implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     private String username;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  //密码需要在反序列化时携带
     private String password;
+    @JsonIgnore //不让随机盐等重要信息转为JSON字符串响应给浏览器
     private String salt;
-
     @TableField("roleId")
     private Integer roleId;
-    @TableField("olderId")
-    private Integer olderId;
+    private String sex;
+    private Integer age;
+    private String phone;
+    private List<Older> olders; //监护多个老人
 }

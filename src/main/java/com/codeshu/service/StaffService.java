@@ -4,6 +4,8 @@ import com.codeshu.entity.Admin;
 import com.codeshu.entity.Staff;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -12,8 +14,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author codeshu
  * @since 2021-11-04
  */
-public interface StaffService extends IService<Staff> {
+public interface StaffService{
 	Staff findByName(String username);
-
-	public int insert(Staff staff);
+	List<Staff> findAll();
+	List<Staff> findByLikeName(String likeName);
+	int save(Staff staff);
+	int change(Staff staff);
+	int remove(Integer id);
 }

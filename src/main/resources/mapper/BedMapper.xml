@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codeshu.mapper.BedMapper">
+    <select id="total" resultType="int">
+        select count(*) from bed
+    </select>
+    <select id="emptyTotal" resultType="int">
+        select count(*) from bed where status = 0
+    </select>
+    <select id="selectAll" resultType="com.codeshu.entity.Bed">
+        select b.*,o.name as olderName from bed as b left join older as o
+            on b.olderId = o.id
+    </select>
+    <!--根据床位名称准确查询-->
+    <select id="selectByName" parameterType="string" resultType="com.codeshu.entity.Bed">
+        select b.*,o.name as olderName from bed as b left join older as o
+        on b.olderId = o.id
+        where b.name = #{name}
+    </select>
+    <!--根据床位号模糊查询-->
+    <select id="selectByNum" parameterType="string" resultType="com.codeshu.entity.Bed">
+        select b.*,o.name as olderName from bed as b left join older as o
+        on b.olderId = o.id
+        where b.name like concat(#{num},'%')
+    </select>
+
+    <!--    更新-->
+    <update id="update" parameterType="com.codeshu.entity.Bed">
+        update bed set name=#{name},status=#{status},olderId=#{olderId} where id=#{id}
+    </update>
+    <!--    删除-->
+    <delete id="delete" parameterType="int">
+        delete from bed where id = #{id}
+    </delete>
+    <!--    插入-->
+    <insert id="insert" parameterType="com.codeshu.entity.Bed" useGeneratedKeys="true" keyProperty="id">
+        insert into bed(name,status,olderId) values(#{name},#{status},#{olderId})
+    </insert>
+
+</mapper>

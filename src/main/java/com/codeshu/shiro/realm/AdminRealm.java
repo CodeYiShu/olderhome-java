@@ -34,7 +34,7 @@ public class AdminRealm extends AuthorizingRealm {
 		if (admin == null){
 			throw new UnknownAccountException("管理员不存在");
 		}
-		//将查询出来的对象，传入第一个参数，保存到当前主体的Principal
+		//将查询出来的对象，传入第一个参数，保存到当前主体的Principal，我们可以在任何位置调用主体对象的getPrincipal()获取，具体看整合笔记的博客接口的开发
 		//将数据库查询出密码和随机盐保存到AuthenticationInfo中
 		AuthenticationInfo info = new SimpleAuthenticationInfo(admin,admin.getPassword(),
 				ByteSource.Util.bytes(admin.getSalt()),

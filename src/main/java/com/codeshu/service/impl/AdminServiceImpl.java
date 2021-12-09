@@ -27,6 +27,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 	}
 	@Override
 	public int insert(Admin admin) {
+		if(mapper.findByName(admin.getUsername()) != null){
+			return 0;
+		}
 		//1、生成随机盐
 		String salt = SaltUtils.getSalt(8);
 		//2、将随机盐保存到Admin中

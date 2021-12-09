@@ -20,6 +20,10 @@ public class Result implements Serializable {
 		//响应状态码200，message为操作成功，data可能是用户对象等数据
 		return success(200,"操作成功",data);
 	}
+	public static Result success(String message){
+		//响应状态码200，message为操作成功，data可能是用户对象等数据
+		return success(200,message,null);
+	}
 
 	public static Result success(int code,String message,Object data){
 		//自定义响应状态码、message和data

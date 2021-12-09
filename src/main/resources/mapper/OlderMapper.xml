@@ -2,4 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.codeshu.mapper.OlderMapper">
 
+<!--    查询详情-->
+    <resultMap id="olderMap" type="com.codeshu.entity.Older">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="phone" column="phone"/>
+        <result property="health" column="health"/>
+        <result property="guarderId" column="guarderId"/>
+        <result property="guarderName" column="guarderName"/>
+    </resultMap>
+    <select id="selectAll" resultMap="olderMap">
+        select o.*,g.username as guarderName from older o inner join guarder g
+        on o.guarderId = g.id
+    </select>
+    <!--根据名称准确查询-->
+    <select id="selectByName" parameterType="string" resultMap="olderMap">
+        select o.*,g.username as guarderName from older o inner join guarder g
+        on o.guarderId = g.id
+        where name = #{name}
+    </select>
+<!--    根据名称模糊查询-->
+    <select id="selectByLikeName" parameterType="string" resultMap="olderMap">
+        select o.*,g.username as guarderName from older o inner join guarder g
+        on o.guarderId = g.id
+        where name like concat('%',#{name},'%')
+    </select>
+<!--    查询所有紧急老人-->
+    <select id="selectDanger" resultMap="olderMap">
+        select o.*,g.username as guarderName from older o inner join guarder g
+        on o.guarderId = g.id
+        where health = '紧急'
+    </select>
+<!--    查询所有观察老人-->
+    <select id="selectGuancha" resultMap="olderMap">
+        select o.*,g.username as guarderName from older o inner join guarder g
+        on o.guarderId = g.id
+        where health = '观察'
+    </select>
+
+<!--    更新-->
+    <update id="update" parameterType="com.codeshu.entity.Older">
+        update older set name=#{name},age=#{age},phone=#{phone} where id=#{id}
+    </update>
+<!--    删除-->
+    <delete id="delete" parameterType="int">
+        delete from older where id = #{id}
+    </delete>
+<!--    插入-->
+    <insert id="insert" parameterType="com.codeshu.entity.Older" useGeneratedKeys="true" keyProperty="id">
+        insert into older(name,age,phone,guarderId) values(#{name},#{age},#{phone},#{guarderId})
+    </insert>
+<!--    总数查询-->
+    <select id="total" resultType="int">
+        select count(*) from older
+    </select>
+
+    <!--根据监护人Id查询出他所监护的老人-->
+    <select id="findOlderByGuarderId" parameterType="int" resultType="com.codeshu.entity.Older">
+        select * from older where guarderId = #{guarderId}
+    </select>
 </mapper>

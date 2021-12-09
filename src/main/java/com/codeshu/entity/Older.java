@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author codeshu
@@ -24,4 +24,8 @@ public class Older implements Serializable {
     private Integer id;
     private String name;
     private String age;
+    private String phone;
+    private String health;
+    private Integer guarderId;
+    private String guarderName;
 }

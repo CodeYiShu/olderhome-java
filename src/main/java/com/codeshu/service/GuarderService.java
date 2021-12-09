@@ -3,6 +3,9 @@ package com.codeshu.service;
 import com.codeshu.entity.Admin;
 import com.codeshu.entity.Guarder;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.codeshu.entity.Staff;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,11 +15,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author codeshu
  * @since 2021-11-04
  */
-public interface GuarderService extends IService<Guarder> {
+public interface GuarderService{
 	Guarder findByName(String username);
-	/**
-	 * 插入一个用户
-	 * @param user
-	 */
-	public int insert(Guarder guarder);
+	List<Guarder> findAll();
+	List<Guarder> findByLikeName(String likeName);
+	int save(Guarder guarder);
+	int change(Guarder guarder);
+	int remove(Integer id);
 }

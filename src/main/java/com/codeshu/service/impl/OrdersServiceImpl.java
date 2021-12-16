@@ -77,15 +77,15 @@ public class OrdersServiceImpl implements OrdersService {
 			可以先将订单信息存入order表中
 			前台传入costId
 		 */
-		Integer costId = orders.getCostId();  //获取order对应的cost
+		Integer costId = orders.getCostId();  //获取order中的费用ID得到对应的cost费用
 		Cost cost = costMapper.selectById(costId);
 		Integer money = cost.getTotal(); //Cost表中的费用
-		String uuid = orders.setUuid(IdUtil.simpleUUID()).getUuid();
+		String uuid = orders.setUuid(IdUtil.simpleUUID()).getUuid(); //订单号
 		ordersMapper.insert(orders); //存入数据库先，不修改cost表的状态，还是未缴费状态
 
 		//携带过去支付宝进行支付
 		String out_trade_no = uuid;  //订单号
-		Integer total_amount = money; //费用
+		Integer total_amount = money; //费用（让cost中的费用作为支付的费用）
 		String subject = "order";  //描述
 		String timeout_express = "10m";
 		String description = "";
@@ -125,16 +125,16 @@ public class OrdersServiceImpl implements OrdersService {
 		boolean signVerified = AlipaySignature.rsaCheckV1(params, alipayConfig.getPublicKey(), alipayConfig.getCharset(),alipayConfig.getSignType()); //调用SDK验证签名
 
 		if(signVerified) {//验证成功
-			//商户订单号，其实是上面那个方法的order的uuid，可以在这里根据uuid查询订单
+			//商户订单号，其实是上面那个方法的order的uuid，可以在这里根据uuid查询到刚刚支付的orders订单
 			String uuid = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-			Orders orders = ordersMapper.selectByUuid(uuid);
+			Orders orders = ordersMapper.selectByUuid(uuid);  //根据uuid查询刚刚支付的订单
 			//交易状态
 			String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-			if (trade_status.equals("TRADE_SUCCESS")){  //交易成功
-				Integer costId = orders.getCostId();  //获取费用cost的id
+			if (trade_status.equals("TRADE_SUCCESS")){  //如果交易成功
+				Integer costId = orders.getCostId();  //获取订单中费用cost的id
 				Cost cost = costMapper.selectById(costId);
-				cost.setStatus("已缴");  //修改cost的状态
-				costMapper.update(cost);  //更新
+				cost.setStatus("已缴");  //修改cost的状态为已经缴费
+				costMapper.update(cost);  //更新cost
 			}
 			System.out.println("成功");
 		}else {//验证失败

@@ -39,7 +39,7 @@ public class RegisterController {
 			Guarder guarder = new Guarder();
 			guarder.setUsername(loginDto.getUsername());
 			guarder.setPassword(loginDto.getPassword());
-			count = guarderService.save(guarder);
+			count = guarderService.add(guarder);
 		}else {
 			Staff staff = new Staff();
 			staff.setUsername(loginDto.getUsername());

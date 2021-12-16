@@ -12,8 +12,8 @@
         <result property="phone" column="phone"/>
         <result property="sex" column="sex"/>
         <!--嵌套结果导致分页数量多了，所以用嵌套查询-->
-        <collection property="olders" ofType="com.codeshu.entity.Older" column="id"
-                    select="com.codeshu.mapper.OlderMapper.findOlderByGuarderId"/>
+        <collection property="olders" ofType="com.codeshu.entity.Older" column="username"
+                    select="com.codeshu.mapper.OlderMapper.selectOlderByGuarderName"/>
     </resultMap>
     <select id="selectByName" parameterType="string" resultMap="guarderMap">
         select * from guarder where username=#{username}
@@ -32,9 +32,13 @@
         delete from guarder where id = #{id}
     </delete>
     <!--更新-->
-    <delete id="update" parameterType="com.codeshu.entity.Guarder">
+    <update id="update" parameterType="com.codeshu.entity.Guarder">
         update guarder set username=#{username},age=#{age},sex=#{sex},phone=#{phone} where id = #{id}
-    </delete>
+    </update>
+    <!--更新个人信息，包括密码-->
+    <update id="updateInfo" parameterType="com.codeshu.entity.Guarder">
+        update guarder set username=#{username},password=#{password},salt=#{salt},age=#{age},sex=#{sex},phone=#{phone} where id = #{id}
+    </update>
 
     <select id="total" resultType="int">
         select count(*) from guarder
@@ -42,4 +46,8 @@
     <insert id="insert" parameterType="com.codeshu.entity.Guarder" useGeneratedKeys="true" keyProperty="id">
         insert into guarder(username,password,age,sex,phone,salt,roleId) values(#{username},#{password},#{age},#{sex},#{phone},#{salt},2)
     </insert>
+    <!--新增监护的老人-->
+    <update id="insertOlder" parameterType="string">
+        update older set guarderId=#{guarderId} where name=#{olderName}
+    </update>
 </mapper>

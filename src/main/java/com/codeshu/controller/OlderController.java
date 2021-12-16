@@ -106,6 +106,22 @@ public class OlderController {
 	}
 
 	/**
+	 * 根据监护人名称查询老人
+	 */
+	@GetMapping(value = "/findByGuarderName")
+	public Result findByGuarderId(@RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum,
+								  @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize,
+								  @RequestParam String guarderName){
+		//默认显示第1页，1页5行
+		PageHelper.startPage(pageNum,pageSize);
+		//查询出所有的记录
+		List<Older> olders = olderService.findByGuarderName(guarderName);
+		//将查询出来的Older集合,进行分页,将分页后的记录封装为分页对象PageInfo
+		PageInfo<Older> pageInfo = new PageInfo<>(olders);
+		return Result.success(pageInfo);
+	}
+
+	/**
 	 * 更新一个老人信息
 	 * @param older
 	 * @return

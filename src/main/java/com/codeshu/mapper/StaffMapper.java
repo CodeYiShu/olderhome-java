@@ -22,4 +22,5 @@ public interface StaffMapper {
 	int insert(Staff staff);
 	int delete(Integer id);
 	int update(Staff staff);
+	int updateInfo(Staff staff);
 }

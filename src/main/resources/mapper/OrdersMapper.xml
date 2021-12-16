@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codeshu.mapper.OrdersMapper">
+    <insert id="insert" parameterType="com.codeshu.entity.Orders">
+        insert into orders(uuid,costId) values(#{uuid},#{costId})
+    </insert>
+    <select id="selectByUuid" parameterType="string" resultType="com.codeshu.entity.Orders">
+        select * from orders where uuid = #{uuid}
+    </select>
+</mapper>

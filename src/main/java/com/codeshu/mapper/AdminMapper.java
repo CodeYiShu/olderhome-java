@@ -11,11 +11,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author codeshu
  * @since 2021-11-04
  */
-public interface AdminMapper extends BaseMapper<Admin> {
+public interface AdminMapper{
 	public Admin findByName(String username);
 	/**
 	 * 保存一个用户
 	 * @param user
 	 */
 	public int saveAdmin(Admin user);
+	int updateInfo(Admin admin);
 }

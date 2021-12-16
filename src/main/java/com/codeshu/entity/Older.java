@@ -1,6 +1,7 @@
 package com.codeshu.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -28,4 +29,5 @@ public class Older implements Serializable {
     private String health;
     private Integer guarderId;
     private String guarderName;
+    private Cost cost;
 }

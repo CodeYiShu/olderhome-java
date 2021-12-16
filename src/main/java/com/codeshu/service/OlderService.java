@@ -18,9 +18,9 @@ public interface OlderService{
 	List<Older> findByLikeName(String likeName);
 	List<Older> findDangerOlder();
 	List<Older> findGuanchaOlder();
+	List<Older> findByGuarderName(String guarderName);
 	int change(Older older);
 	int remove(Integer id);
 	int add(Older older);
-
 
 }

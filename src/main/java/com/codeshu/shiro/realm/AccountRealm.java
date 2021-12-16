@@ -16,11 +16,11 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
+ * 校验jwt
  * @author ShuCode
  * @date 2021/11/5 14:32
  * @Email 13828965090@163.com
  */
-
 public class AccountRealm extends AuthorizingRealm {
 	@Autowired
 	JwtUtils jwtUtils;

@@ -26,7 +26,11 @@
         delete from staff where id = #{id}
     </delete>
     <!--更新-->
-    <delete id="update" parameterType="com.codeshu.entity.Staff">
+    <update id="update" parameterType="com.codeshu.entity.Staff">
         update staff set username=#{username},age=#{age},sex=#{sex},phone=#{phone} where id = #{id}
-    </delete>
+    </update>
+    <!--更新个人信息，包括密码-->
+    <update id="updateInfo" parameterType="com.codeshu.entity.Staff">
+        update staff set username=#{username},password=#{password},salt=#{salt},age=#{age},sex=#{sex},phone=#{phone} where id = #{id}
+    </update>
 </mapper>

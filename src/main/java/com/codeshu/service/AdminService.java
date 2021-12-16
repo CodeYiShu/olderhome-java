@@ -11,11 +11,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author codeshu
  * @since 2021-11-04
  */
-public interface AdminService extends IService<Admin> {
+public interface AdminService{
 	Admin findByName(String username);
 	/**
 	 * 插入一个用户
 	 * @param user
 	 */
 	public int insert(Admin admin);
+	Admin changeInfo(Admin admin);
 }

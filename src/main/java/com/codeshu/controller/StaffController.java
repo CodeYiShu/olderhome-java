@@ -93,7 +93,7 @@ public class StaffController {
 		}
 	}
 
-	//更改
+	//更改(一般是管理员更改)
 	@PostMapping(value = "/change")
 	public Result change(@RequestBody Staff staff){
 		System.out.println(staff);
@@ -104,5 +104,18 @@ public class StaffController {
 			return Result.fail("更改失败");
 		}
 	}
+
+	//更改个人信息（自己修改，包括密码）
+	@PostMapping(value = "/changeInfo")
+	public Result changeInfo(@RequestBody Staff staff){
+		System.out.println(staff);
+		Staff newStaff = staffService.changeInfo(staff);
+		if(newStaff != null){
+			return Result.success(200,"修改成功咯",newStaff);
+		}else {
+			return Result.fail("修改成功咯");
+		}
+	}
+
 
 }

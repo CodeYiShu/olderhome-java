@@ -12,6 +12,7 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
+ * 医护人员登录认证
  * @author ShuCode
  * @date 2021/11/6 10:34
  * @Email 13828965090@163.com

@@ -1,7 +1,9 @@
 package com.codeshu.service.impl;
 
+import com.codeshu.entity.Cost;
 import com.codeshu.entity.Guarder;
 import com.codeshu.entity.Older;
+import com.codeshu.mapper.CostMapper;
 import com.codeshu.mapper.GuarderMapper;
 import com.codeshu.mapper.OlderMapper;
 import com.codeshu.service.OlderService;
@@ -25,6 +27,8 @@ public class OlderServiceImpl implements OlderService {
 	private OlderMapper olderMapper;
 	@Autowired
 	private GuarderMapper guarderMapper;
+	@Autowired
+	private CostMapper costMapper;
 
 	@Override
 	public List<Older> findAll() { //查询所有
@@ -47,8 +51,18 @@ public class OlderServiceImpl implements OlderService {
 	}
 
 	@Override
+	public List<Older> findByGuarderName(String guarderName) {
+		return olderMapper.selectOlderByGuarderName(guarderName);
+	}
+
+	@Override
 	public int change(Older older) {
-		return olderMapper.update(older);
+		int count = olderMapper.update(older);  //先更新老人信息
+		if (count != 0){ //再更新费用
+			Cost cost = older.getCost().setOlderId(older.getId()); //设置缴费的老人ID
+			costMapper.updateByOlderId(cost);
+		}
+		return count;
 	}
 
 	@Override
@@ -63,7 +77,9 @@ public class OlderServiceImpl implements OlderService {
 			return 0;  //如果监护人为空则不能新增老人
 		}
 		older.setGuarderId(guarder.getId());  //设置老人的监护人ID
-		return olderMapper.insert(older);
+		olderMapper.insert(older); //插入之后会将自增的老人ID赋值给older对象的id
+		Cost cost = older.getCost().setOlderId(older.getId()); //将老人ID设置进缴费中
+		return costMapper.insert(cost);
 	}
 
 

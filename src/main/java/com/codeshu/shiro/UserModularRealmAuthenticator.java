@@ -53,6 +53,7 @@ public class UserModularRealmAuthenticator extends ModularRealmAuthenticator {
 		// 判断是单Realm还是多Realm
 		if (typeRealms.size() == 1){
 			logger.info("doSingleRealmAuthentication() execute ");
+			//去调用Realm的认证方法
 			return doSingleRealmAuthentication(typeRealms.get(0),authenticationToken);
 		}
         else{

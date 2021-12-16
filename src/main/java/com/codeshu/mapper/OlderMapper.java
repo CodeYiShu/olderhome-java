@@ -19,9 +19,10 @@ public interface OlderMapper{
 	List<Older> selectDanger();
 	List<Older> selectGuancha();
 	Older selectByName(String name);
+	Older selectNotGuarderByName(String name);
+	List<Older> selectOlderByGuarderName(String guarderName);
 	int total();
 	int update(Older older);
 	int delete(Integer id);
 	int insert(Older older);
-	Older findOlderByGuarderId(Integer guarderId);
 }

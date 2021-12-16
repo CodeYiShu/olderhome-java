@@ -2,6 +2,7 @@ package com.codeshu.controller;
 
 
 import com.codeshu.common.Result;
+import com.codeshu.entity.Admin;
 import com.codeshu.entity.Guarder;
 import com.codeshu.entity.Staff;
 import com.codeshu.service.GuarderService;
@@ -10,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -94,7 +96,7 @@ public class GuarderController {
 	@PostMapping(value = "/add")
 	public Result add(@RequestBody Guarder guarder){
 		System.out.println(guarder);
-		int count = guarderService.save(guarder);
+		int count = guarderService.add(guarder);
 		if(count == 1){
 			return Result.success("新增成功");
 		}else {
@@ -102,7 +104,7 @@ public class GuarderController {
 		}
 	}
 
-	//更改
+	//更改（管理员的修改）
 	@PostMapping(value = "/change")
 	public Result change(@RequestBody Guarder guarder){
 		System.out.println(guarder);
@@ -113,4 +115,27 @@ public class GuarderController {
 			return Result.fail("更改失败");
 		}
 	}
+
+	//更改个人信息（个人的更改，包括自己的密码）
+	@PostMapping(value = "/changeInfo")
+	public Result changeInfo(@RequestBody Guarder guarder, HttpServletResponse response){
+		Guarder newGuarder = guarderService.changeInfo(guarder);  //返回新的Guarder
+		if(newGuarder != null){
+			return Result.success(200,"修改成功咯",newGuarder);
+		}else {
+			return Result.fail("修改失败咯");
+		}
+	}
+
+	@GetMapping("/addOlder") //新增监护的老人
+	public Result addOlder(String guarderId,String olderName){ //根据老人名称修改他的监护人ID
+		System.out.println(olderName + "：" + guarderId);
+		int count = guarderService.addOlder(guarderId,olderName);
+		if(count == 1){
+			return Result.success("新增成功");
+		}else {
+			return Result.fail("新增失败，可能当前老人已被绑定");
+		}
+	}
+
 }

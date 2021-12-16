@@ -7,4 +7,7 @@
     <insert id="saveAdmin" parameterType="com.codeshu.entity.Admin" useGeneratedKeys="true" keyProperty="id">
         insert into admin(username,password,salt,roleId) values(#{username},#{password},#{salt},1)
     </insert>
+    <update id="updateInfo" parameterType="com.codeshu.entity.Admin">
+        update admin set username=#{username},password=#{password},salt=#{salt} where id=#{id}
+    </update>
 </mapper>

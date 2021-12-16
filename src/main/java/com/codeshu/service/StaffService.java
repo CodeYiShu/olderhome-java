@@ -21,4 +21,5 @@ public interface StaffService{
 	int save(Staff staff);
 	int change(Staff staff);
 	int remove(Integer id);
+	Staff changeInfo(Staff staff);
 }

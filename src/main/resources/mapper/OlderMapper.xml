@@ -11,6 +11,8 @@
         <result property="health" column="health"/>
         <result property="guarderId" column="guarderId"/>
         <result property="guarderName" column="guarderName"/>
+        <association property="cost" javaType="com.codeshu.entity.Cost" column="id"
+        select="com.codeshu.mapper.CostMapper.selectByOlderId"/>
     </resultMap>
     <select id="selectAll" resultMap="olderMap">
         select o.*,g.username as guarderName from older o inner join guarder g
@@ -21,6 +23,16 @@
         select o.*,g.username as guarderName from older o inner join guarder g
         on o.guarderId = g.id
         where name = #{name}
+    </select>
+    <!--根据老人id查询-->
+    <select id="selectById" parameterType="int" resultMap="olderMap">
+        select o.*,g.username as guarderName from older o inner join guarder g
+        on o.guarderId = g.id
+        where id = #{id}
+    </select>
+    <!--根据名称查询没有被监护的老人信息-->
+    <select id="selectNotGuarderByName" parameterType="string" resultType="com.codeshu.entity.Older">
+        select *from older where name = #{name} and guarderId is null
     </select>
 <!--    根据名称模糊查询-->
     <select id="selectByLikeName" parameterType="string" resultMap="olderMap">
@@ -40,26 +52,29 @@
         on o.guarderId = g.id
         where health = '观察'
     </select>
+    <!--根据监护人名称查询出他所监护的老人-->
+    <select id="selectOlderByGuarderName" parameterType="string" resultMap="olderMap">
+        select o.*,g.username as guarderName from older o inner join guarder g
+        on o.guarderId = g.id
+        where g.username = #{guarderName}
+    </select>
 
-<!--    更新-->
-    <update id="update" parameterType="com.codeshu.entity.Older">
-        update older set name=#{name},age=#{age},phone=#{phone} where id=#{id}
-    </update>
-<!--    删除-->
-    <delete id="delete" parameterType="int">
-        delete from older where id = #{id}
-    </delete>
-<!--    插入-->
-    <insert id="insert" parameterType="com.codeshu.entity.Older" useGeneratedKeys="true" keyProperty="id">
-        insert into older(name,age,phone,guarderId) values(#{name},#{age},#{phone},#{guarderId})
-    </insert>
-<!--    总数查询-->
+    <!--    总数查询-->
     <select id="total" resultType="int">
         select count(*) from older
     </select>
 
-    <!--根据监护人Id查询出他所监护的老人-->
-    <select id="findOlderByGuarderId" parameterType="int" resultType="com.codeshu.entity.Older">
-        select * from older where guarderId = #{guarderId}
-    </select>
+    <!--    更新-->
+    <update id="update" parameterType="com.codeshu.entity.Older">
+        update older set name=#{name},age=#{age},phone=#{phone} where id=#{id}
+    </update>
+    <!--    删除-->
+    <delete id="delete" parameterType="int">
+        delete from older where id = #{id}
+    </delete>
+    <!--    插入-->
+    <insert id="insert" parameterType="com.codeshu.entity.Older" keyProperty="id" useGeneratedKeys="true">
+        insert into older(name,age,phone,guarderId) values(#{name},#{age},#{phone},#{guarderId})
+    </insert>
+
 </mapper>

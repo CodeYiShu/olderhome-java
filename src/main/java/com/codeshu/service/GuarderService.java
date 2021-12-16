@@ -19,7 +19,9 @@ public interface GuarderService{
 	Guarder findByName(String username);
 	List<Guarder> findAll();
 	List<Guarder> findByLikeName(String likeName);
-	int save(Guarder guarder);
+	int add(Guarder guarder);
+	int addOlder(String guarderId,String olderName);
 	int change(Guarder guarder);
+	Guarder changeInfo(Guarder guarder);
 	int remove(Integer id);
 }

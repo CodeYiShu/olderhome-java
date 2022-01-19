@@ -11,7 +11,7 @@
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 16/12/2021 22:02:25
+ Date: 19/01/2022 21:37:18
 */
 
 SET NAMES utf8mb4;
@@ -30,13 +30,28 @@ CREATE TABLE `admin`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `roleId`(`roleId`) USING BTREE,
   CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
 INSERT INTO `admin` VALUES (8, 'testA', 'dfa0453112510b2498130718c845a612', 1, '#ID%^iur');
 INSERT INTO `admin` VALUES (14, 'test', 'ca807779f6ecac44752bb343f62ef595', 1, 'i%ip#g^$');
+
+-- ----------------------------
+-- Table structure for article
+-- ----------------------------
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE `article`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of article
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for bed
@@ -48,7 +63,7 @@ CREATE TABLE `bed`  (
   `olderId` int NULL DEFAULT NULL,
   `status` int NULL DEFAULT NULL COMMENT '是否空闲，0表示空闲',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of bed
@@ -75,15 +90,15 @@ CREATE TABLE `cost`  (
   `total` int NULL DEFAULT NULL,
   `status` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cost
 -- ----------------------------
-INSERT INTO `cost` VALUES (1, 1, 2000, '已缴');
+INSERT INTO `cost` VALUES (1, 1, 2000, '未缴');
 INSERT INTO `cost` VALUES (2, 2, 400, '已缴');
 INSERT INTO `cost` VALUES (3, 3, 5000, '未缴');
-INSERT INTO `cost` VALUES (4, 25, 5000, '已缴');
+INSERT INTO `cost` VALUES (4, 25, 400, '未缴');
 INSERT INTO `cost` VALUES (5, 30, 5000, '已缴');
 INSERT INTO `cost` VALUES (6, 31, 5000, '已缴');
 INSERT INTO `cost` VALUES (9, 36, 5000, '已缴');
@@ -118,8 +133,8 @@ INSERT INTO `cost` VALUES (40, 33, 10, '未缴');
 INSERT INTO `cost` VALUES (41, 34, 10, '未缴');
 INSERT INTO `cost` VALUES (42, 35, 10, '未缴');
 INSERT INTO `cost` VALUES (45, 38, 10, '已缴');
-INSERT INTO `cost` VALUES (46, 41, 100, '未缴');
-INSERT INTO `cost` VALUES (47, 42, 5000, '已缴');
+INSERT INTO `cost` VALUES (46, 41, 100, '已缴');
+INSERT INTO `cost` VALUES (47, 42, 5000, '未缴');
 
 -- ----------------------------
 -- Table structure for guarder
@@ -148,7 +163,7 @@ INSERT INTO `guarder` VALUES (5, 'zhaoliu', '66a5756456cf9647cfe73fea399209f7', 
 INSERT INTO `guarder` VALUES (7, 'wangwu', '3ad3731a2c09b2dea4782b67ca3cc3b0', 100, '男', '123', 2, '#&fyvLhZ');
 INSERT INTO `guarder` VALUES (8, 'dalao', '473e2d124bc403546f0d0c3d4e186540', 123, '男', '123', 2, '29du^aC&');
 INSERT INTO `guarder` VALUES (10, 'jianhuren', 'b22db339680fba9514e917d2a8839d84', 100, '男', '123', 2, '^4Hw4mgb');
-INSERT INTO `guarder` VALUES (11, 'test', 'ce604ca9db8447a9e6324f85b15274c3', 22, '男', '123', 2, '#k@pv&%Q');
+INSERT INTO `guarder` VALUES (11, 'test', '980cf4a453c88bbd201e849b388eb0f0', 24, '男', '123', 2, 'hITkidfZ');
 INSERT INTO `guarder` VALUES (12, 'test2', '89d54ef6b6a6514cec08b4450591ad20', 123, '男', '123', 2, '4C2f#MIa');
 
 -- ----------------------------
@@ -163,7 +178,7 @@ CREATE TABLE `older`  (
   `guarderId` int NULL DEFAULT NULL,
   `health` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '健康情况：健康、观察和紧急',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of older
@@ -212,7 +227,7 @@ CREATE TABLE `orders`  (
   `uuid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `costId` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
@@ -221,6 +236,11 @@ INSERT INTO `orders` VALUES (1, 'aaa11', 10);
 INSERT INTO `orders` VALUES (7, '1bd9a8940d254d7badbd1d2ee190c401', 45);
 INSERT INTO `orders` VALUES (10, '18b953269de5454a8e63124ab6db5f3a', 46);
 INSERT INTO `orders` VALUES (11, 'e2663c51c2564af8a42837512d5e5484', 46);
+INSERT INTO `orders` VALUES (12, '0249c8a391db4d66a7153cfb3eb1d70b', 46);
+INSERT INTO `orders` VALUES (13, '615c31e9f3164a118c26333d5188dc2b', 46);
+INSERT INTO `orders` VALUES (18, 'e7a301ad02a549858bd44ab83deb94a2', 4);
+INSERT INTO `orders` VALUES (19, 'ec1d33fbc5af44239550775ff423acac', 2);
+INSERT INTO `orders` VALUES (20, '952b7a97fc314f90b704d9ee77c0d394', 4);
 
 -- ----------------------------
 -- Table structure for role

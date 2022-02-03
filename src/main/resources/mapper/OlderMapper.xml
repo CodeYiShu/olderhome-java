@@ -59,6 +59,11 @@
         where g.username = #{guarderName}
     </select>
 
+    <!--根据年份、月份查询总数-->
+    <select id="selectByYearAndMonth" parameterType="string" resultType="int">
+        select count(*) from older where enterDate like concat(#{enterDate},'%')
+    </select>
+
     <!--    总数查询-->
     <select id="total" resultType="int">
         select count(*) from older
@@ -74,7 +79,7 @@
     </delete>
     <!--    插入-->
     <insert id="insert" parameterType="com.codeshu.entity.Older" keyProperty="id" useGeneratedKeys="true">
-        insert into older(name,age,phone,guarderId) values(#{name},#{age},#{phone},#{guarderId})
+        insert into older(name,age,phone,guarderId,enterDate) values(#{name},#{age},#{phone},#{guarderId},#{enterDate})
     </insert>
 
 </mapper>

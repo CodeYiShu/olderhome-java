@@ -1,5 +1,6 @@
 package com.codeshu.service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,4 +10,5 @@ import java.util.Map;
  */
 public interface InfoService {
 	Map<String,Integer> getCardInfo();
+	List<Integer> getEchartsInfo(String year);
 }

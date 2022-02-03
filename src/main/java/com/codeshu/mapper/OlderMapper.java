@@ -21,6 +21,7 @@ public interface OlderMapper{
 	Older selectByName(String name);
 	Older selectNotGuarderByName(String name);
 	List<Older> selectOlderByGuarderName(String guarderName);
+	int selectByYearAndMonth(String year);
 	int total();
 	int update(Older older);
 	int delete(Integer id);

@@ -30,4 +30,5 @@ public class Older implements Serializable {
     private Integer guarderId;
     private String guarderName;
     private Cost cost;
+    private String enterDate;  //入住时间
 }

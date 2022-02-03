@@ -31,7 +31,7 @@
     <delete id="delete" parameterType="int">
         delete from guarder where id = #{id}
     </delete>
-    <!--更新-->
+    <!--不包括密码-->
     <update id="update" parameterType="com.codeshu.entity.Guarder">
         update guarder set username=#{username},age=#{age},sex=#{sex},phone=#{phone} where id = #{id}
     </update>
@@ -39,7 +39,6 @@
     <update id="updateInfo" parameterType="com.codeshu.entity.Guarder">
         update guarder set username=#{username},password=#{password},salt=#{salt},age=#{age},sex=#{sex},phone=#{phone} where id = #{id}
     </update>
-
     <select id="total" resultType="int">
         select count(*) from guarder
     </select>

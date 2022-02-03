@@ -10,6 +10,7 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
+import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.realm.Realm;
@@ -18,6 +19,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
+import org.apache.shiro.util.ThreadContext;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -67,6 +69,7 @@ public class ShiroConfig {
 													 RedisCacheManager redisCacheManager) {
 		//设置自定义Realm给安全管理器
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager(accountRealm);
+		ThreadContext.bind(securityManager);
 		//设置多Realm
 		securityManager.setAuthenticator(modularRealmAuthenticator());
 		List<Realm> realms = new ArrayList<>();
@@ -155,6 +158,18 @@ public class ShiroConfig {
 		hashedCredentialsMatcher.setHashAlgorithmName("md5");//散列算法:这里使用MD5算法;
 		hashedCredentialsMatcher.setHashIterations(1024);//散列的次数，注册时Service中也要保持是1024
 		return hashedCredentialsMatcher;
+	}
+
+	/**
+	 * 解决循环依赖
+	 * @param securityManager
+	 * @return
+	 */
+	@Bean
+	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") DefaultSecurityManager securityManager) {
+		AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+		advisor.setSecurityManager(securityManager);
+		return advisor;
 	}
 
 }

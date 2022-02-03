@@ -18,5 +18,6 @@ public interface AdminMapper{
 	 * @param user
 	 */
 	public int saveAdmin(Admin user);
-	int updateInfo(Admin admin);
+	int updateInfo(Admin admin);  //不修改密码
+	int updateInfoAndPassword(Admin admin); //修改密码
 }

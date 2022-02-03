@@ -24,6 +24,6 @@ public interface GuarderMapper{
 	int insertOlder(@Param("guarderId") String guarderId,@Param("olderName") String olderName);
 	int total();
 	int delete(Integer id);
-	int update(Guarder guarder);
-	int updateInfo(Guarder guarder);
+	int update(Guarder guarder);  //包括修改密码
+	int updateInfo(Guarder guarder);  //不修改密码
 }

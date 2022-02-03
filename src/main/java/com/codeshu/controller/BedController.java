@@ -1,8 +1,8 @@
 package com.codeshu.controller;
 
+import com.codeshu.common.log.LogAnnotation;
 import com.codeshu.common.Result;
 import com.codeshu.entity.Bed;
-import com.codeshu.entity.Older;
 import com.codeshu.service.BedService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -29,6 +29,7 @@ public class BedController {
 	 * @return 返回一个封装了分页后的记录的分页对象PageInfo
 	 */
 	@GetMapping(value = "/findAll")
+	@LogAnnotation(module = "床位",operator = "查询所有")
 	public Result findAll(@RequestParam(defaultValue = "1", value = "pageNum") Integer pageNum,
 						  @RequestParam(defaultValue = "5",value = "pageSize") Integer pageSize){
 		//以及默认显示第1页，1页5行

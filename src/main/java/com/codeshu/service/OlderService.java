@@ -22,5 +22,4 @@ public interface OlderService{
 	int change(Older older);
 	int remove(Integer id);
 	int add(Older older);
-
 }

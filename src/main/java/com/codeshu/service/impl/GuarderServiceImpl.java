@@ -83,18 +83,23 @@ public class GuarderServiceImpl implements GuarderService {
 	}
 
 	@Override
-	public Guarder changeInfo(Guarder guarder) {
-		//1、重新生成随机盐
-		String salt = SaltUtils.getSalt(8);
-		//2、将随机盐保存到Admin中
-		guarder.setSalt(salt);
-		//3、重新将明文密码进行md5+salt+散列进行加密
-		Md5Hash md5Hash = new Md5Hash(guarder.getPassword(),salt,1024);
-		//4、将加密后的密码保存到Guarder中
-		guarder.setPassword(md5Hash.toHex());
-		//5、调用Dao层的updateInfo()将user保存到数据库中
-		guarderMapper.updateInfo(guarder);
-		//6、再去查询新的监护人员信息
+	public Guarder changeInfo(Guarder guarder) {  //修改个人信息
+		//不修改密码
+		if (guarder.getPassword() == null || guarder.getPassword().length() == 0){
+			guarderMapper.update(guarder);
+		}else {  //修改密码
+			//1、重新生成随机盐
+			String salt = SaltUtils.getSalt(8);
+			//2、将随机盐保存到Admin中
+			guarder.setSalt(salt);
+			//3、重新将明文密码进行md5+salt+散列进行加密
+			Md5Hash md5Hash = new Md5Hash(guarder.getPassword(), salt, 1024);
+			//4、将加密后的密码保存到Guarder中
+			guarder.setPassword(md5Hash.toHex());
+			//5、调用Dao层的updateInfo()将user保存到数据库中
+			guarderMapper.updateInfo(guarder);
+		}
+		//再去查询新的监护人员信息
 		Guarder newGuarder = this.findByName(guarder.getUsername());
 		return newGuarder;
 	}

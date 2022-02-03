@@ -8,6 +8,9 @@
         insert into admin(username,password,salt,roleId) values(#{username},#{password},#{salt},1)
     </insert>
     <update id="updateInfo" parameterType="com.codeshu.entity.Admin">
+        update admin set username=#{username} where id=#{id}
+    </update>
+    <update id="updateInfoAndPassword" parameterType="com.codeshu.entity.Admin">
         update admin set username=#{username},password=#{password},salt=#{salt} where id=#{id}
     </update>
 </mapper>

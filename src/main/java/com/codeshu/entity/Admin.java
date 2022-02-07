@@ -28,6 +28,7 @@ public class Admin implements Serializable{
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  //密码要反序列化时携带过来，比如新增时
     private String password;
+    private String name;
     @JsonIgnore //不让随机盐转为JSON字符串响应给浏览器
     private String salt;
     @TableField("roleId")

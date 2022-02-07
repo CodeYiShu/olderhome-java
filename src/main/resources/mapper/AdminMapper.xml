@@ -4,13 +4,19 @@
     <select id="findByName" parameterType="string" resultType="com.codeshu.entity.Admin">
         select * from admin where username=#{username}
     </select>
+    <select id="selectById" parameterType="int" resultType="com.codeshu.entity.Admin">
+        select * from admin where id = #{id}
+    </select>
+    <!--注册-->
     <insert id="saveAdmin" parameterType="com.codeshu.entity.Admin" useGeneratedKeys="true" keyProperty="id">
         insert into admin(username,password,salt,roleId) values(#{username},#{password},#{salt},1)
     </insert>
+    <!--自己更新信息-->
     <update id="updateInfo" parameterType="com.codeshu.entity.Admin">
-        update admin set username=#{username} where id=#{id}
+        update admin set username=#{username},name=#{name} where id=#{id}
     </update>
+    <!--自己更新信息包括密码-->
     <update id="updateInfoAndPassword" parameterType="com.codeshu.entity.Admin">
-        update admin set username=#{username},password=#{password},salt=#{salt} where id=#{id}
+        update admin set username=#{username},name=#{name},password=#{password},salt=#{salt} where id=#{id}
     </update>
 </mapper>

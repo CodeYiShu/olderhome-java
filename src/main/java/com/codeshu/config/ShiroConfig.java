@@ -45,6 +45,19 @@ public class ShiroConfig {
 	@Autowired
 	private JwtFilter jwtFilter;
 
+
+	/**
+	 * 解决循环依赖
+	 * @param securityManager
+	 * @return
+	 */
+	@Bean
+	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") DefaultSecurityManager securityManager) {
+		AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+		advisor.setSecurityManager(securityManager);
+		return advisor;
+	}
+
 	//配置ShiroFilter
 	@Bean("shiroFilterFactoryBean")
 	public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager,
@@ -160,16 +173,5 @@ public class ShiroConfig {
 		return hashedCredentialsMatcher;
 	}
 
-	/**
-	 * 解决循环依赖
-	 * @param securityManager
-	 * @return
-	 */
-	@Bean
-	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") DefaultSecurityManager securityManager) {
-		AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-		advisor.setSecurityManager(securityManager);
-		return advisor;
-	}
 
 }

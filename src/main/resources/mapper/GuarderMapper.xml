@@ -23,9 +23,9 @@
         select * from guarder
     </select>
 
-    <!--模糊查询-->
+    <!--根据用户名模糊查询-->
     <select id="selectByLikeName" parameterType="string" resultType="com.codeshu.entity.Guarder">
-        select * from guarder where username like concat('%',#{username},'%')
+        select * from guarder where name like concat('%',#{name},'%')
     </select>
     <!--删除-->
     <delete id="delete" parameterType="int">
@@ -33,17 +33,18 @@
     </delete>
     <!--不包括密码-->
     <update id="update" parameterType="com.codeshu.entity.Guarder">
-        update guarder set username=#{username},age=#{age},sex=#{sex},phone=#{phone} where id = #{id}
+        update guarder set username=#{username},name=#{name},age=#{age},sex=#{sex},phone=#{phone} where id = #{id}
     </update>
     <!--更新个人信息，包括密码-->
     <update id="updateInfo" parameterType="com.codeshu.entity.Guarder">
-        update guarder set username=#{username},password=#{password},salt=#{salt},age=#{age},sex=#{sex},phone=#{phone} where id = #{id}
+        update guarder set username=#{username},password=#{password},name=#{name},salt=#{salt},age=#{age},sex=#{sex},phone=#{phone} where id = #{id}
     </update>
     <select id="total" resultType="int">
         select count(*) from guarder
     </select>
+    <!--注册-->
     <insert id="insert" parameterType="com.codeshu.entity.Guarder" useGeneratedKeys="true" keyProperty="id">
-        insert into guarder(username,password,age,sex,phone,salt,roleId) values(#{username},#{password},#{age},#{sex},#{phone},#{salt},2)
+        insert into guarder(username,password,name,age,sex,phone,salt,roleId) values(#{username},#{password},#{name},#{age},#{sex},#{phone},#{salt},2)
     </insert>
     <!--新增监护的老人-->
     <update id="insertOlder" parameterType="string">

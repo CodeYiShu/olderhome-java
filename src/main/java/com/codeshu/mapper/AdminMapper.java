@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface AdminMapper{
 	public Admin findByName(String username);
+	public Admin selectById(Integer id);
 	/**
 	 * 保存一个用户
 	 * @param user

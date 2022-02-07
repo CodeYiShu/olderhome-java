@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codeshu.mapper.ArticleMapper">
+    <!--查询监护人的同时可以查询出它监护的老人-->
+    <resultMap id="articleMap" type="com.codeshu.entity.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="time" column="time"/>
+        <!--嵌套结果导致分页数量多了，所以用嵌套查询-->
+        <collection property="admin" ofType="com.codeshu.entity.Admin" column="adminId"
+                    select="com.codeshu.mapper.AdminMapper.selectById"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="articleMap">
+        select * from article
+    </select>
+    <select id="selectById" parameterType="int" resultMap="articleMap">
+        select * from article where id = #{id}
+    </select>
+    <select id="selectByTitle" parameterType="string" resultMap="articleMap">
+        select * from article where title like concat("%",#{title},"%")
+    </select>
+    <insert id="insert" parameterType="com.codeshu.entity.Article">
+        insert into article(title,content,time,adminId) values(#{title},#{content},#{time},#{admin.id})
+    </insert>
+    <delete id="delete" parameterType="int">
+        delete from article where id = #{id}
+    </delete>
+</mapper>

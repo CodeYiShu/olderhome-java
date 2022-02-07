@@ -57,7 +57,7 @@ public class GuarderController {
 	}
 
 	/**
-	 * 根据名称模糊查询监护人员信息
+	 * 根据姓名模糊查询监护人员信息
 	 * @param pageNum
 	 * @param pageSize
 	 * @param name

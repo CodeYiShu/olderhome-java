@@ -31,6 +31,7 @@ public class Guarder implements Serializable {
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  //密码需要在反序列化时携带
     private String password;
+    private String name;
     @JsonIgnore //不让随机盐等重要信息转为JSON字符串响应给浏览器
     private String salt;
     @TableField("roleId")

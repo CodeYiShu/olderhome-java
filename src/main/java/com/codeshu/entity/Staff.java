@@ -32,6 +32,7 @@ public class Staff implements Serializable {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  //密码需要在反序列化时携带
     private String password;
+    private String name;
     private Integer age;
     private String sex;
     private String phone;

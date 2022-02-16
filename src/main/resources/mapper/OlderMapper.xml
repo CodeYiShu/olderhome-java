@@ -8,9 +8,10 @@
         <result property="name" column="name"/>
         <result property="age" column="age"/>
         <result property="phone" column="phone"/>
-        <result property="health" column="health"/>
         <result property="guarderId" column="guarderId"/>
         <result property="guarderName" column="guarderName"/>
+        <association property="health" javaType="com.codeshu.entity.Health" column="healthId"
+        select="com.codeshu.mapper.HealthMapper.selectById"/>
         <association property="cost" javaType="com.codeshu.entity.Cost" column="id"
         select="com.codeshu.mapper.CostMapper.selectByOlderId"/>
     </resultMap>
@@ -38,19 +39,19 @@
     <select id="selectByLikeName" parameterType="string" resultMap="olderMap">
         select o.*,g.username as guarderName from older o inner join guarder g
         on o.guarderId = g.id
-        where name like concat('%',#{name},'%')
+        where o.name like concat('%','z','%')
     </select>
 <!--    查询所有紧急老人-->
     <select id="selectDanger" resultMap="olderMap">
         select o.*,g.username as guarderName from older o inner join guarder g
         on o.guarderId = g.id
-        where health = '紧急'
+        where healthId = 3
     </select>
 <!--    查询所有观察老人-->
     <select id="selectGuancha" resultMap="olderMap">
         select o.*,g.username as guarderName from older o inner join guarder g
         on o.guarderId = g.id
-        where health = '观察'
+        where healthId = 2
     </select>
     <!--根据监护人名称查询出他所监护的老人-->
     <select id="selectOlderByGuarderName" parameterType="string" resultMap="olderMap">
@@ -71,7 +72,7 @@
 
     <!--    更新-->
     <update id="update" parameterType="com.codeshu.entity.Older">
-        update older set name=#{name},age=#{age},phone=#{phone} where id=#{id}
+        update older set name=#{name},age=#{age},phone=#{phone},healthId=#{health.id} where id=#{id}
     </update>
     <!--    删除-->
     <delete id="delete" parameterType="int">
@@ -79,7 +80,7 @@
     </delete>
     <!--    插入-->
     <insert id="insert" parameterType="com.codeshu.entity.Older" keyProperty="id" useGeneratedKeys="true">
-        insert into older(name,age,phone,guarderId,enterDate) values(#{name},#{age},#{phone},#{guarderId},#{enterDate})
+        insert into older(name,age,phone,guarderId,enterDate,healthId) values(#{name},#{age},#{phone},#{guarderId},#{enterDate},#{health.id})
     </insert>
 
 </mapper>

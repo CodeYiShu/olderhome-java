@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
  * @date 2021/12/14 20:57
  * @Email 13828965090@163.com
  */
+//缴费情况
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)

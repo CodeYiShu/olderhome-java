@@ -11,7 +11,7 @@
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 07/02/2022 15:14:28
+ Date: 16/02/2022 15:45:40
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `admin`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `roleId`(`roleId`) USING BTREE,
   CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin
@@ -51,7 +51,7 @@ CREATE TABLE `article`  (
   `adminId` int NULL DEFAULT NULL COMMENT '管理员id',
   `time` datetime(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '发布时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article
@@ -148,6 +148,10 @@ INSERT INTO `cost` VALUES (46, 41, 100, '已缴');
 INSERT INTO `cost` VALUES (47, 42, 5000, '未缴');
 INSERT INTO `cost` VALUES (48, 45, 100, '未缴');
 INSERT INTO `cost` VALUES (49, 46, 100, '未缴');
+INSERT INTO `cost` VALUES (50, 47, 5000, '已缴');
+INSERT INTO `cost` VALUES (51, 43, 200, '未缴');
+INSERT INTO `cost` VALUES (52, 44, 200, '已缴');
+INSERT INTO `cost` VALUES (53, 48, 2, '未缴');
 
 -- ----------------------------
 -- Table structure for guarder
@@ -166,7 +170,7 @@ CREATE TABLE `guarder`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `roleId`(`roleId`) USING BTREE,
   CONSTRAINT `guarder_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of guarder
@@ -184,6 +188,24 @@ INSERT INTO `guarder` VALUES (15, 'jianhuren2', '19c73f52728fc170a720762d35e205f
 INSERT INTO `guarder` VALUES (16, 'jianhuaa', 'e4fbf94d1052bf2386e05c534a8527ba', '监护nn', 100, '女', '321', 2, 'DMoVfhy8');
 
 -- ----------------------------
+-- Table structure for health
+-- ----------------------------
+DROP TABLE IF EXISTS `health`;
+CREATE TABLE `health`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `healthName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '健康状态',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of health
+-- ----------------------------
+INSERT INTO `health` VALUES (1, '健康', '老人身体健康');
+INSERT INTO `health` VALUES (2, '观察', '老人身体需要观察');
+INSERT INTO `health` VALUES (3, '紧急', '老人身体急需要进行相应的措施');
+
+-- ----------------------------
 -- Table structure for older
 -- ----------------------------
 DROP TABLE IF EXISTS `older`;
@@ -193,7 +215,7 @@ CREATE TABLE `older`  (
   `age` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `guarderId` int NULL DEFAULT NULL,
-  `health` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '健康情况：健康、观察和紧急',
+  `healthId` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '健康情况：健康、观察和紧急',
   `enterDate` datetime(0) NULL DEFAULT NULL COMMENT '入住时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -201,44 +223,45 @@ CREATE TABLE `older`  (
 -- ----------------------------
 -- Records of older
 -- ----------------------------
-INSERT INTO `older` VALUES (1, 'zhanglao', '103', '13828528428', 1, '健康', NULL);
-INSERT INTO `older` VALUES (2, 'lilao', '101', '13828528422', 11, '健康', NULL);
-INSERT INTO `older` VALUES (3, 'wanglao', '100', '13828528421', 2, '健康', NULL);
-INSERT INTO `older` VALUES (4, 'huanglao', '100', '13828528423', 2, '健康', NULL);
-INSERT INTO `older` VALUES (5, 'linlao', '100', '13828528424', 4, '健康', NULL);
-INSERT INTO `older` VALUES (6, 'chenlao', '100', '13828528425', 4, '健康', NULL);
-INSERT INTO `older` VALUES (7, 'yanglao', '100', '13828528426', 1, '健康', NULL);
-INSERT INTO `older` VALUES (8, 'yonglao', '100', '13828528427', 5, '健康', NULL);
-INSERT INTO `older` VALUES (9, 'hulao', '100', '13828528429', 7, '健康', '2021-10-01 01:58:16');
-INSERT INTO `older` VALUES (10, 'sunlao', '100', '13828528418', 3, '健康', '2021-11-01 01:58:12');
-INSERT INTO `older` VALUES (11, 'zhaolao', '100', '13828528438', 2, '健康', '2021-04-01 01:58:10');
-INSERT INTO `older` VALUES (12, 'zhoulao', '100', '13828528448', 1, '健康', '2021-12-01 01:58:06');
-INSERT INTO `older` VALUES (13, 'wulao', '100', '13828528458', 3, '健康', '2022-01-29 01:58:03');
-INSERT INTO `older` VALUES (14, 'liulao', '100', '13828528468', 4, '健康', '2022-02-28 01:57:58');
-INSERT INTO `older` VALUES (15, 'hulao', '100', '13828528478', 5, '健康', '2021-02-01 01:57:48');
-INSERT INTO `older` VALUES (16, 'helao', '100', '13828528488', 6, '健康', '2022-02-28 01:57:44');
-INSERT INTO `older` VALUES (17, 'songlao', '100', '13828528498', 7, '健康', '2021-03-29 01:57:38');
-INSERT INTO `older` VALUES (18, 'malao', '100', '13828528408', 8, '健康', '2021-05-29 01:57:21');
-INSERT INTO `older` VALUES (19, 'luolao', '100', '13828528128', 7, '健康', '2021-05-29 01:57:15');
-INSERT INTO `older` VALUES (20, 'dinglao', '100', '13828528228', 9, '健康', '2021-06-29 01:57:08');
-INSERT INTO `older` VALUES (21, 'ronglao', '100', '13828528328', 6, '健康', '2021-07-01 01:57:01');
-INSERT INTO `older` VALUES (22, 'xianlao', '100', '13828528428', 4, '健康', '2022-02-01 01:56:58');
-INSERT INTO `older` VALUES (23, 'fanlao', '100', '13828528528', 9, '健康', '2022-02-01 01:56:52');
-INSERT INTO `older` VALUES (25, '111', '100', '13828528628', 11, '观察', '2021-08-05 01:56:38');
-INSERT INTO `older` VALUES (29, 'laoren', '100', NULL, 7, '紧急', '2021-08-01 01:56:32');
-INSERT INTO `older` VALUES (30, 'test', '100', '123456789', 11, '紧急', '2021-09-01 01:56:26');
-INSERT INTO `older` VALUES (31, 'test2', '100', '123', 11, '紧急', '2022-02-01 01:56:21');
-INSERT INTO `older` VALUES (33, '13', '100', '13', 12, NULL, '2021-10-01 01:56:14');
-INSERT INTO `older` VALUES (34, '14', '100', '123', 12, NULL, '2021-10-01 01:56:09');
-INSERT INTO `older` VALUES (35, '30', '100', '123', 12, NULL, '2021-10-01 01:56:03');
-INSERT INTO `older` VALUES (36, '31', '100', '123', 12, NULL, '2021-11-01 01:55:57');
-INSERT INTO `older` VALUES (37, '133', '100', '123', 11, NULL, '2021-12-01 01:55:52');
-INSERT INTO `older` VALUES (38, '122', '100', '123', 11, NULL, '2021-12-01 01:55:44');
-INSERT INTO `older` VALUES (41, '12312', '130', '12211', 11, NULL, '2022-02-02 01:55:36');
-INSERT INTO `older` VALUES (43, 'zhangsan', NULL, NULL, 1, NULL, '2022-02-01 00:00:00');
-INSERT INTO `older` VALUES (44, 'zhangsan', NULL, NULL, 1, NULL, '2021-01-29 00:00:00');
-INSERT INTO `older` VALUES (45, '', '100', '333', 1, NULL, '2022-01-29 00:00:00');
-INSERT INTO `older` VALUES (46, '123123', '100', '4654', 1, NULL, '2022-01-29 00:00:00');
+INSERT INTO `older` VALUES (1, 'zhanglao', '103', '13828528428', 1, '1', NULL);
+INSERT INTO `older` VALUES (2, 'lilao', '101', '13828528422', 11, '1', NULL);
+INSERT INTO `older` VALUES (3, 'wanglao', '100', '13828528421', 2, '1', NULL);
+INSERT INTO `older` VALUES (4, 'huanglao', '100', '13828528423', 2, '1', NULL);
+INSERT INTO `older` VALUES (5, 'linlao', '100', '13828528424', 4, '1', NULL);
+INSERT INTO `older` VALUES (6, 'chenlao', '100', '13828528425', 4, '1', NULL);
+INSERT INTO `older` VALUES (7, 'yanglao', '100', '13828528426', 1, '1', NULL);
+INSERT INTO `older` VALUES (8, 'yonglao', '100', '13828528427', 5, '1', NULL);
+INSERT INTO `older` VALUES (9, 'hulao', '100', '13828528429', 7, '1', '2021-10-01 01:58:16');
+INSERT INTO `older` VALUES (10, 'sunlao', '100', '13828528418', 3, '1', '2021-11-01 01:58:12');
+INSERT INTO `older` VALUES (11, 'zhaolao', '100', '13828528438', 2, '1', '2021-04-01 01:58:10');
+INSERT INTO `older` VALUES (12, 'zhoulao', '100', '13828528448', 1, '1', '2021-12-01 01:58:06');
+INSERT INTO `older` VALUES (13, 'wulao', '100', '13828528458', 3, '1', '2022-01-29 01:58:03');
+INSERT INTO `older` VALUES (14, 'liulao', '100', '13828528468', 4, '1', '2022-02-28 01:57:58');
+INSERT INTO `older` VALUES (15, 'hulao', '100', '13828528478', 5, '1', '2021-02-01 01:57:48');
+INSERT INTO `older` VALUES (16, 'helao', '100', '13828528488', 6, '1', '2022-02-28 01:57:44');
+INSERT INTO `older` VALUES (17, 'songlao', '100', '13828528498', 7, '1', '2021-03-29 01:57:38');
+INSERT INTO `older` VALUES (18, 'malao', '100', '13828528408', 8, '1', '2021-05-29 01:57:21');
+INSERT INTO `older` VALUES (19, 'luolao', '100', '13828528128', 7, '1', '2021-05-29 01:57:15');
+INSERT INTO `older` VALUES (20, 'dinglao', '100', '13828528228', 9, '1', '2021-06-29 01:57:08');
+INSERT INTO `older` VALUES (21, 'ronglao', '100', '13828528328', 6, '1', '2021-07-01 01:57:01');
+INSERT INTO `older` VALUES (22, 'xianlao', '100', '13828528428', 4, '2', '2022-02-01 01:56:58');
+INSERT INTO `older` VALUES (23, 'fanlao', '100', '13828528528', 9, '2', '2022-02-01 01:56:52');
+INSERT INTO `older` VALUES (25, '111', '100', '13828528628', 11, '2', '2021-08-05 01:56:38');
+INSERT INTO `older` VALUES (29, 'laoren', '100', NULL, 7, '3', '2021-08-01 01:56:32');
+INSERT INTO `older` VALUES (30, 'test', '100', '123456789', 11, '3', '2021-09-01 01:56:26');
+INSERT INTO `older` VALUES (31, 'test2', '100', '123', 11, '1', '2022-02-01 01:56:21');
+INSERT INTO `older` VALUES (33, '13', '100', '13', 12, '1', '2021-10-01 01:56:14');
+INSERT INTO `older` VALUES (34, '14', '100', '123', 12, '2', '2021-10-01 01:56:09');
+INSERT INTO `older` VALUES (35, '30', '100', '123', 12, '1', '2021-10-01 01:56:03');
+INSERT INTO `older` VALUES (36, '31', '100', '123', 12, '1', '2021-11-01 01:55:57');
+INSERT INTO `older` VALUES (37, '133', '100', '123', 11, '2', '2021-12-01 01:55:52');
+INSERT INTO `older` VALUES (38, '122', '100', '123', 11, '2', '2021-12-01 01:55:44');
+INSERT INTO `older` VALUES (41, '12312', '130', '12211', 11, '2', '2022-02-02 01:55:36');
+INSERT INTO `older` VALUES (43, 'zhangsan', NULL, NULL, 1, '3', '2022-02-01 00:00:00');
+INSERT INTO `older` VALUES (44, 'zhangsan', NULL, NULL, 1, '3', '2021-01-29 00:00:00');
+INSERT INTO `older` VALUES (45, '', '100', '333', 1, '1', '2022-01-29 00:00:00');
+INSERT INTO `older` VALUES (46, '123123', '100', '4654', 1, '1', '2022-01-29 00:00:00');
+INSERT INTO `older` VALUES (48, '11112222', '100', '123', 1, '2', '2022-02-16 00:00:00');
 
 -- ----------------------------
 -- Table structure for orders
@@ -249,7 +272,7 @@ CREATE TABLE `orders`  (
   `uuid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `costId` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
@@ -303,7 +326,7 @@ CREATE TABLE `staff`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `roleId`(`roleId`) USING BTREE,
   CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of staff

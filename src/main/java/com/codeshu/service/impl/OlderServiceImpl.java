@@ -60,6 +60,14 @@ public class OlderServiceImpl implements OlderService {
 
 	@Override
 	public int change(Older older) {
+		//设置健康状态
+		if ("紧急".equals(older.getHealth().getHealthName())){
+			older.getHealth().setId(3);
+		}else if("观察".equals(older.getHealth().getHealthName())){
+			older.getHealth().setId(2);
+		}else {
+			older.getHealth().setId(1);
+		}
 		int count = olderMapper.update(older);  //先更新老人信息
 		if (count != 0){ //再更新费用
 			Cost cost = older.getCost().setOlderId(older.getId()); //设置缴费的老人ID
@@ -78,6 +86,14 @@ public class OlderServiceImpl implements OlderService {
 		Guarder guarder = guarderMapper.selectByName(older.getGuarderName()); //从数据库查询此监护人
 		if(guarder == null){
 			return 0;  //如果监护人为空则不能新增老人
+		}
+		//设置健康状态
+		if ("紧急".equals(older.getHealth().getHealthName())){
+			older.getHealth().setId(3);
+		}else if("观察".equals(older.getHealth().getHealthName())){
+			older.getHealth().setId(2);
+		}else {
+			older.getHealth().setId(1);
 		}
 		older.setGuarderId(guarder.getId());  //设置老人的监护人ID
 		olderMapper.insert(older); //插入之后会将自增的老人ID赋值给older对象的id

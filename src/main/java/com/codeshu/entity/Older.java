@@ -26,9 +26,9 @@ public class Older implements Serializable {
     private String name;
     private String age;
     private String phone;
-    private String health;
     private Integer guarderId;
     private String guarderName;
-    private Cost cost;
+    private Cost cost;  //缴费情况
     private String enterDate;  //入住时间
+    private Health health; //健康状态
 }

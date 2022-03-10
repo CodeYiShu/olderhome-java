@@ -29,11 +29,16 @@ public class AdminController {
 	JwtUtils jwtUtils;
 
 	@RequestMapping("/index")
-	public Admin index(){
+	public Result index(){
 		//获取在AccountRealm中保存到主体对象的Principal
 		Admin admin = (Admin)SecurityUtils.getSubject().getPrincipal();
 		System.out.println(admin);
-		return admin;
+		return Result.success(admin);
+	}
+
+	@PostMapping("/test")
+	public Result test(@RequestBody Admin admin){
+		return Result.success(admin);
 	}
 
 	@PostMapping("/changeInfo")  //修改个人信息

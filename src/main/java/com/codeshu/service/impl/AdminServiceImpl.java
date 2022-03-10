@@ -22,11 +22,11 @@ public class AdminServiceImpl implements AdminService {
 	private AdminMapper mapper;
 	@Override
 	public Admin findByName(String username) {
-		return mapper.findByName(username);
+		return mapper.selectByUserName(username);
 	}
 	@Override
-	public int insert(Admin admin) {
-		if(mapper.findByName(admin.getUsername()) != null){
+	public int add(Admin admin) {
+		if(mapper.selectByUserName(admin.getUsername()) != null){
 			return 0;
 		}
 		//1、生成随机盐
@@ -38,7 +38,7 @@ public class AdminServiceImpl implements AdminService {
 		//4、将加密后的密码保存到Admin中
 		admin.setPassword(md5Hash.toHex());
 		///5、调用Dao层的saveAdmin()将user保存到数据库中
-		int count = mapper.saveAdmin(admin);
+		int count = mapper.insertAdmin(admin);
 		return count;
 	}
 

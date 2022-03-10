@@ -85,7 +85,7 @@ public class StaffController {
 	@PostMapping(value = "/add")
 	public Result add(@RequestBody Staff staff){
 		System.out.println(staff);
-		int count = staffService.save(staff);
+		int count = staffService.add(staff);
 		if(count == 1){
 			return Result.success("新增成功");
 		}else {

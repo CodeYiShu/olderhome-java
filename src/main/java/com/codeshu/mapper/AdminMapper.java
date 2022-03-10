@@ -12,13 +12,13 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-11-04
  */
 public interface AdminMapper{
-	public Admin findByName(String username);
+	public Admin selectByUserName(String username);
 	public Admin selectById(Integer id);
 	/**
 	 * 保存一个用户
 	 * @param user
 	 */
-	public int saveAdmin(Admin user);
+	public int insertAdmin(Admin user);
 	int updateInfo(Admin admin);  //不修改密码
 	int updateInfoAndPassword(Admin admin); //修改密码
 }

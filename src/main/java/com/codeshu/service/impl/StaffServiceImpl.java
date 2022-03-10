@@ -31,7 +31,7 @@ public class StaffServiceImpl implements StaffService {
 	}
 	//新增
 	@Override
-	public int save(Staff staff) {  //对密码进行加密后存入
+	public int add(Staff staff) {  //对密码进行加密后存入
 		if(mapper.selectByName(staff.getUsername())!=null){
 			return 0;
 		}

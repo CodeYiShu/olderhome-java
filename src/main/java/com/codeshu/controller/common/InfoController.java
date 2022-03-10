@@ -25,15 +25,15 @@ public class InfoController {
 	@Autowired
 	private OlderService olderService;
 
-	@GetMapping("/getCardInfo")
-	public Result getCardInfo(){  //获取卡片数据
-		Map<String,Integer> map = infoService.getCardInfo();
+	@GetMapping("/findCardInfo")
+	public Result findCardInfo(){  //获取卡片数据
+		Map<String,Integer> map = infoService.findCardInfo();
 		return Result.success(map);
 	}
 
-	@GetMapping("/getEchartsInfo")
-	public Result getEchartsInfo(String year){  //根据年份得到老人新增数量
-		List<Integer> echartsInfo = infoService.getEchartsInfo(year);
+	@GetMapping("/findEchartsInfo")
+	public Result findEchartsInfo(String year){  //根据年份得到老人新增数量
+		List<Integer> echartsInfo = infoService.findEchartsInfo(year);
 //		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //		String format = simpleDateFormat.format(older.getEnterDate());
 //		olderService.add(older);

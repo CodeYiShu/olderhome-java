@@ -39,7 +39,7 @@
     <select id="selectByLikeName" parameterType="string" resultMap="olderMap">
         select o.*,g.username as guarderName from older o inner join guarder g
         on o.guarderId = g.id
-        where o.name like concat('%','z','%')
+        where o.name like concat('%',#{name},'%')
     </select>
 <!--    查询所有紧急老人-->
     <select id="selectDanger" resultMap="olderMap">

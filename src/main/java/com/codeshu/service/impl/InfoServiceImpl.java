@@ -38,7 +38,7 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public Map<String, Integer> getCardInfo() {  //得到卡片信息
+	public Map<String, Integer> findCardInfo() {  //得到卡片信息
 		//先从缓存中尝试得到key为CardInfo的数据
 		Map redisMap = (Map)redisTemplate.opsForValue().get("cardInfo");
 		if (redisMap != null){
@@ -65,7 +65,7 @@ public class InfoServiceImpl implements InfoService {
 		return map;
 	}
 
-	public List<Integer> getEchartsInfo(String year){  //得到图表信息
+	public List<Integer> findEchartsInfo(String year){  //得到图表信息
 		//先从缓存中尝试得到key为EchartsInfo的数据
 		List<Integer> redisList = (List)redisTemplate.opsForValue().get("echartsInfo_" + year);
 		if (redisList != null){

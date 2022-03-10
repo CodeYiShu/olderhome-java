@@ -34,7 +34,7 @@ public class RegisterController {
 			Admin admin = new Admin();
 			admin.setUsername(loginDto.getUsername());
 			admin.setPassword(loginDto.getPassword());
-			count = adminService.insert(admin);
+			count = adminService.add(admin);
 		}else if("2".equals(loginDto.getRole())){
 			Guarder guarder = new Guarder();
 			guarder.setUsername(loginDto.getUsername());
@@ -44,7 +44,7 @@ public class RegisterController {
 			Staff staff = new Staff();
 			staff.setUsername(loginDto.getUsername());
 			staff.setPassword(loginDto.getPassword());
-			count = staffService.save(staff);
+			count = staffService.add(staff);
 		}
 		//如果响应成功数据
 		if(count != 0){

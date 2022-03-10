@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.codeshu.mapper.AdminMapper">
-    <select id="findByName" parameterType="string" resultType="com.codeshu.entity.Admin">
+    <select id="selectByUserName" parameterType="string" resultType="com.codeshu.entity.Admin">
         select * from admin where username=#{username}
     </select>
     <select id="selectById" parameterType="int" resultType="com.codeshu.entity.Admin">
         select * from admin where id = #{id}
     </select>
     <!--注册-->
-    <insert id="saveAdmin" parameterType="com.codeshu.entity.Admin" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertAdmin" parameterType="com.codeshu.entity.Admin" useGeneratedKeys="true" keyProperty="id">
         insert into admin(username,password,salt,roleId) values(#{username},#{password},#{salt},1)
     </insert>
     <!--自己更新信息-->

@@ -18,7 +18,7 @@ public interface StaffService{
 	Staff findByName(String username);
 	List<Staff> findAll();
 	List<Staff> findByLikeName(String likeName);
-	int save(Staff staff);
+	int add(Staff staff);
 	int change(Staff staff);
 	int remove(Integer id);
 	Staff changeInfo(Staff staff);

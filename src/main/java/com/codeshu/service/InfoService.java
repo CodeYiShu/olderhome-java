@@ -9,6 +9,6 @@ import java.util.Map;
  * @Email 13828965090@163.com
  */
 public interface InfoService {
-	Map<String,Integer> getCardInfo();
-	List<Integer> getEchartsInfo(String year);
+	Map<String,Integer> findCardInfo();
+	List<Integer> findEchartsInfo(String year);
 }

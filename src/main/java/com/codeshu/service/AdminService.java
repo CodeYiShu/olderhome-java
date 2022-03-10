@@ -15,8 +15,8 @@ public interface AdminService{
 	Admin findByName(String username);
 	/**
 	 * 插入一个用户
-	 * @param user
+	 * @param admin
 	 */
-	public int insert(Admin admin);
+	public int add(Admin admin);
 	Admin changeInfo(Admin admin);
 }

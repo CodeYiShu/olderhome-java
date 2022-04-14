@@ -20,7 +20,7 @@ import java.util.Map;
 @Slf4j
 @Data
 @Component
-@ConfigurationProperties(prefix = "markerhub.jwt")
+@ConfigurationProperties(prefix = "jwt")
 public class JwtUtils {
 	//以下三个属性与配置文件绑定
 	private String secret;  //密钥

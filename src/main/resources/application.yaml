@@ -2,7 +2,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/olderhome?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
 #    下面是Linux服务器上的MySQL密码
@@ -20,10 +20,10 @@ spring:
 server:
   port: 8081
 
-markerhub:
-  jwt:
-    secret: test
-    expire: 3600
+#jwt加密密钥和超时时间，超时时间默认是3600*1000
+jwt:
+  secret: qwertyuiop123
+  expire: 3600
 
 
 #Mybatis映射文件

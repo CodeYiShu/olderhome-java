@@ -85,12 +85,11 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.2.0</version>
         </dependency>
-
-        <!--shiro-redis的starter包-->
+        <!--shiro启动器-->
         <dependency>
-            <groupId>org.crazycake</groupId>
-            <artifactId>shiro-redis-spring-boot-starter</artifactId>
-            <version>3.2.1</version>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring-boot-web-starter</artifactId>
+            <version>1.11.0</version>
         </dependency>
         <!--redis缓存-->
         <dependency>
